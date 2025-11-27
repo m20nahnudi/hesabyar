@@ -42,7 +42,7 @@
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         .fa-spin-fast { animation: spin 0.8s infinite linear; }
 
-        /* استایل هدر یکپارچه و نیتیو */
+        /* استایل هدر یکپارچه */
         .page-header { 
             display: flex; 
             align-items: center; 
@@ -107,6 +107,7 @@
         label { display: block; margin-bottom: 8px; font-weight: 500; color: var(--text-secondary); font-size: 14px; }
         input, textarea, select { width: 100%; padding: 12px 15px; border: 1px solid var(--border-color); border-radius: 8px; font-size: 16px !important; font-family: var(--font-family); transition: all 0.3s ease; background-color: var(--bg-color); color: var(--text-primary); }
         input.has-error, textarea.has-error, select.has-error { border-color: var(--danger-color); box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2); }
+        /* آیکون جستجو */
         input[type="search"] { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24' 24' fill='%2399A3AF'%3E%3Cpath d='M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: 15px center; background-size: 20px; padding-right: 45px; }
         body.theme-dark input[type="search"], body.theme-midnight input[type="search"], body.theme-royal input[type="search"] { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24' 24' fill='%23F9FAFB'%3E%3Cpath d='M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'/%3E%3C/svg%3E"); }
         input:focus, textarea:focus, select:focus { border-color: var(--primary-color); outline: none; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); }
@@ -515,7 +516,7 @@
                         <button class="native-back-btn" onclick="window.history.back()">
                             <i class="fas fa-arrow-right"></i>
                         </button>
-                        <h1>سطل زباله و آرشیو</h1>
+                        <h1>مدیریت بایگانی</h1>
                     </div>
                     <button id="header-theme-toggle" class="header-theme-toggle-btn">
                         <span class="theme-icon-wrapper"><i class="fas fa-moon"></i><i class="fas fa-sun"></i></span>
@@ -524,7 +525,7 @@
 
                 <div style="padding: 0 4px; margin-bottom: 20px;">
                     <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.6;">
-                        آیتم‌هایی که تسویه شده‌اند یا دستی حذف شده‌اند در اینجا نگهداری می‌شوند.
+                        آیتم‌هایی که تسویه شده‌اند یا دستی بایگانی شده‌اند در اینجا نگهداری می‌شوند.
                     </p>
                 </div>
 
@@ -555,7 +556,7 @@
 
             <section class="page-content" id="more-page"><div class="page-header"><div class="header-start"><button class="native-back-btn" onclick="window.history.back()"><i class="fas fa-arrow-right"></i></button><h1>بیشتر</h1></div><button id="header-theme-toggle" class="header-theme-toggle-btn"><span class="theme-icon-wrapper"><i class="fas fa-moon"></i><i class="fas fa-sun"></i></span></button></div>
             <div class="more-menu-list">
-                <a href="#" class="more-menu-item" data-page-link="archive-page"><i class="icon fas fa-archive" style="color: var(--warning-color);"></i><span class="text">سطل زباله و آرشیو</span><i class="chevron fas fa-chevron-left"></i></a>
+                <a href="#" class="more-menu-item" data-page-link="archive-page"><i class="icon fas fa-archive" style="color: var(--warning-color);"></i><span class="text">مدیریت بایگانی</span><i class="chevron fas fa-chevron-left"></i></a>
                 <a href="#" class="more-menu-item" data-page-link="employers-page"><i class="icon fas fa-users"></i><span class="text">مدیریت کارفرمایان</span><i class="chevron fas fa-chevron-left"></i></a>
                 <a href="#" class="more-menu-item" data-page-link="payments-page"><i class="icon fas fa-hand-holding-dollar"></i><span class="text">لیست دریافتی‌ها</span><i class="chevron fas fa-chevron-left"></i></a>
                 <a href="#" class="more-menu-item" data-page-link="expenses-page"><i class="icon fas fa-receipt"></i><span class="text">لیست هزینه‌ها</span><i class="chevron fas fa-chevron-left"></i></a>
@@ -590,17 +591,23 @@
         let myChart = null, incomeExpenseChart = null, expenseChart = null, undoTimeout = null, autoBackupTimeout = null;
         let lastDeleted = { item: null, type: null, sourceArray: null, index: -1 };
         const monthNames = ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"];
-        const formatNumber = (number) => new Intl.NumberFormat('en-US').format(number); // Changed to en-US for standard comma separation
+        const formatNumber = (number) => new Intl.NumberFormat('en-US').format(number); 
 
         const generateUniqueId = () => Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
         
         const vibrate = (pattern = 15) => { if ("vibrate" in navigator) { navigator.vibrate(pattern); } };
 
+        // Convert Persian/Arabic digits to English
+        function toEnglishDigits(str) {
+            if (!str) return str;
+            return str.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
+        }
+
         function setupDateInputMask(inputElement) {
             if (!inputElement) return;
             inputElement.addEventListener('input', function(e) {
                 if (e.inputType === 'deleteContentBackward') return;
-                let v = e.target.value;
+                let v = toEnglishDigits(e.target.value); // Convert to English first
                 v = v.replace(/[^\d\/]/g, ''); 
                 const digits = v.replace(/\D/g, ''); 
                 if (digits.length === 2 && !v.includes('/')) {
@@ -626,11 +633,12 @@
             });
         }
 
-        // New function to handle currency input formatting
+        // Handle currency input formatting (3-digit comma)
         function setupCurrencyInput(inputElement) {
             if (!inputElement) return;
             inputElement.addEventListener('input', function(e) {
-                let value = e.target.value.replace(/[^0-9]/g, '');
+                let raw = toEnglishDigits(e.target.value);
+                let value = raw.replace(/[^0-9]/g, '');
                 if (value) {
                     value = parseInt(value).toLocaleString('en-US');
                     e.target.value = value;
@@ -707,23 +715,31 @@
         }
 
         const saveToLocalStorage = () => localStorage.setItem('data', JSON.stringify(state));
+        
         function loadFromLocalStorage() { 
             const savedData = localStorage.getItem('data'); 
             if (savedData) { 
-                const loadedState = JSON.parse(savedData); 
-                state = { ...state, ...loadedState }; 
-                state.editingItemId = null; 
-                state.editingItemType = null; 
-                state.expenses = state.expenses || []; 
-                state.archive = state.archive || []; 
-                state.goals = loadedState.goals || {}; 
-                state.collapsibleStates = loadedState.collapsibleStates || {}; 
-                state.pagination = loadedState.pagination || { works: { currentPage: 1, itemsPerPage: 10 } }; 
-                if (state.autoBackup === undefined) state.autoBackup = false; 
-                state.works.forEach(work => { if (work.paidAmount === undefined) work.paidAmount = 0; if (work.dateStarted === undefined) work.dateStarted = null; if (work.dateFinished === undefined) work.dateFinished = null; }); 
-                state.expenses.forEach(exp => { if (!exp.category) exp.category = 'عمومی'; }); 
+                try {
+                    const loadedState = JSON.parse(savedData); 
+                    state = { ...state, ...loadedState }; 
+                    // Reset editing state just in case
+                    state.editingItemId = null; 
+                    state.editingItemType = null; 
+                    state.expenses = state.expenses || []; 
+                    state.archive = state.archive || []; 
+                    state.goals = loadedState.goals || {}; 
+                    state.collapsibleStates = loadedState.collapsibleStates || {}; 
+                    state.pagination = loadedState.pagination || { works: { currentPage: 1, itemsPerPage: 10 } }; 
+                    if (state.autoBackup === undefined) state.autoBackup = false; 
+                    state.works.forEach(work => { if (work.paidAmount === undefined) work.paidAmount = 0; if (work.dateStarted === undefined) work.dateStarted = null; if (work.dateFinished === undefined) work.dateFinished = null; }); 
+                    state.expenses.forEach(exp => { if (!exp.category) exp.category = 'عمومی'; }); 
+                } catch (e) {
+                    console.error("Failed to load data", e);
+                    showNotification("خطا در بارگذاری اطلاعات. داده‌ها ممکن است خراب شده باشند.", 'error');
+                }
             } 
         }
+
         function addOrUpdateCredit(employerName, amount, reasonText = 'اعتبار') { if (amount <= 0) return; let creditWork = state.works.find(w => w.employer === employerName && w.isCredit); if (creditWork) { creditWork.total -= amount; } else { state.works.unshift({ id: generateUniqueId(), employer: employerName, type: reasonText, isCredit: true, total: -amount, paidAmount: 0, count: 1, price: -amount, dateAdded: new Date().toISOString() }); } showNotification(`مبلغ ${formatNumber(amount)} تومان به عنوان اعتبار برای "${employerName}" ثبت شد.`, 'success'); }
         function toJalali(date) { if (!date) return ''; return moment(new Date(date)).format('jYYYY/jMM/jDD'); }
         function parseFlexibleJalali(dateStr) { if (!dateStr || typeof dateStr !== 'string') return null; const parts = dateStr.split(/[\/-]/); if (parts.length !== 3) return null; const yearIndex = parts.findIndex(p => p.length === 4); const yearFirstFormats = ['jYYYY/jM/jD', 'jYYYY/jMM/jD', 'jYYYY/jM/jDD', 'jYYYY/jMM/jDD']; const dayFirstFormats = ['jD/jM/jYYYY', 'jD/jMM/jYYYY', 'jDD/jM/jYYYY', 'jDD/jMM/jYYYY']; let m; if (yearIndex === 0) { m = moment(dateStr, yearFirstFormats, 'fa', true); } else if (yearIndex === 2) { m = moment(dateStr, dayFirstFormats, 'fa', true); } else { return null; } return m.isValid() ? m : null; }
@@ -884,6 +900,34 @@
             DOM.expenseGoalCurrent.innerHTML = `${formatNumber(currentMonthExpenses)} <small class="currency-unit">تومان</small>`;
         }
 
+        // --- FIX: Added saveGoals function ---
+        function saveGoals(formEl) {
+            const incomeGoalInput = formEl.querySelector('#incomeGoal');
+            const expenseGoalInput = formEl.querySelector('#expenseGoal');
+            
+            // Remove commas before parsing
+            const incomeGoal = parseInt(incomeGoalInput.value.replace(/[^0-9]/g, '')) || 0;
+            const expenseGoal = parseInt(expenseGoalInput.value.replace(/[^0-9]/g, '')) || 0;
+
+            const currentYear = moment().jYear();
+            const currentMonth = moment().jMonth();
+            const monthKey = `${currentYear}-${currentMonth}`;
+
+            state.goals[monthKey] = {
+                income: incomeGoal,
+                expenses: expenseGoal
+            };
+
+            showNotification('اهداف ماهانه با موفقیت ذخیره شد.', 'success');
+            
+            // Close modal properly
+            if(window.history.state && window.history.state.modal) window.history.back();
+            else DOM.formModal.style.display = 'none'; 
+            
+            document.body.style.overflow = '';
+            updateAll();
+        }
+
         function getEmployerStats(employerName) { const allWorksForEmployer = [...state.works, ...state.archive.filter(item => item.itemType === ITEM_TYPES.WORK)].filter(w => w.employer === employerName); const allPaymentsForEmployer = [...state.payments, ...state.archive.filter(item => item.itemType === ITEM_TYPES.PAYMENT)].filter(p => p.employer === employerName); const totalWorkValue = allWorksForEmployer.filter(w => !w.isCredit).reduce((sum, w) => sum + w.total, 0); const totalPaid = allPaymentsForEmployer.reduce((sum, p) => sum + p.amount, 0); const currentBalance = state.works.filter(w => w.employer === employerName).reduce((sum, w) => sum + w.total, 0); const unsettledWorksCount = state.works.filter(w => w.employer === employerName && !w.isCredit && w.paidAmount < w.total).length; return { totalWorkValue, totalPaid, currentBalance, unsettledWorksCount }; }
         function updateEmployersList() { const searchTerm = DOM.employerSearchInput.value.toLowerCase(); const employerNames = [...new Set([...state.works, ...state.archive].map(item => item.employer).filter(Boolean))]; const filteredNames = employerNames.filter(name => name.toLowerCase().includes(searchTerm)); DOM.employersListContainer.innerHTML = ''; if (filteredNames.length === 0) { DOM.employersListContainer.innerHTML = emptyStateEmployersEl; return; } filteredNames.sort().forEach(name => { const stats = getEmployerStats(name); const card = document.createElement('div'); card.className = 'employer-card'; card.dataset.employerName = name; card.innerHTML = ` <div class="employer-card-header"> <span class="employer-name">${name}</span> <span class="employer-balance ${stats.currentBalance >= 0 ? 'negative' : 'positive'}">${formatNumber(Math.abs(stats.currentBalance))} ت</span> </div> <div class="employer-stats"> <span><i class="fas fa-briefcase"></i> ${stats.unsettledWorksCount} کار باز</span> <span><i class="fas fa-hand-holding-dollar"></i> کل دریافتی: ${formatNumber(stats.totalPaid)} ت</span> </div> `; card.addEventListener('click', () => showEmployerDetail(name)); DOM.employersListContainer.appendChild(card); }); }
         
@@ -931,8 +975,11 @@
             const priceInput = formContainer.querySelector('#workPrice');
             const employer = employerInput.value.trim();
             const type = typeInput.value.trim();
-            const count = parseInt(countInput.value.replace(/,/g, ''));
-            const price = parseInt(priceInput.value.replace(/,/g, ''));
+            
+            // Fix: remove commas from string before parsing
+            const count = parseInt(countInput.value.replace(/,/g, '').replace(/[^0-9]/g, ''));
+            const price = parseInt(priceInput.value.replace(/,/g, '').replace(/[^0-9]/g, ''));
+            
             const dateStartedStr = formContainer.querySelector('#workDateStarted').value.trim();
             const dateFinishedInput = formContainer.querySelector('#workDateFinished');
             const dateFinishedStr = dateFinishedInput ? dateFinishedInput.value.trim() : null;
@@ -980,9 +1027,9 @@
             }
             state.editingItemId = null;
             state.editingItemType = null;
-            DOM.formModal.style.display = 'none';
-            document.body.style.overflow = '';
             if(window.history.state && window.history.state.modal) window.history.back();
+            else DOM.formModal.style.display = 'none';
+            document.body.style.overflow = '';
             updateAll();
         }
 
@@ -1012,6 +1059,9 @@
                 if (work.dateFinished) finishDateInput.value = toJalali(work.dateFinished); 
                 formEl.querySelector('#setFinishDateBtn').addEventListener('click', () => { finishDateInput.value = getCurrentJalaliDate(); }); 
                 
+                setupCurrencyInput(formEl.querySelector('#workCount'));
+                setupCurrencyInput(formEl.querySelector('#workPrice'));
+
                 const submitBtn = formEl.querySelector('#workSubmitBtn'); 
                 submitBtn.addEventListener('click', () => runWithNativeDelay(submitBtn, workSubmit)); 
 
@@ -1019,8 +1069,10 @@
                 cancelBtn.textContent = 'لغو'; 
                 cancelBtn.className = 'btn btn-secondary'; 
                 cancelBtn.addEventListener('click', () => { 
-                    state.editingItemId = null; state.editingItemType = null; DOM.formModal.style.display = 'none'; document.body.style.overflow = ''; 
+                    state.editingItemId = null; state.editingItemType = null; 
                     if(window.history.state && window.history.state.modal) window.history.back();
+                    else DOM.formModal.style.display = 'none'; 
+                    document.body.style.overflow = ''; 
                 }); 
                 submitBtn.parentElement.appendChild(cancelBtn); 
             }); 
@@ -1037,7 +1089,8 @@
             const amountInput = formContainer.querySelector('#paymentAmount');
             const dateInput = formContainer.querySelector('#paymentDate');
             const employer = employerSelect.value;
-            const amount = parseInt(amountInput.value.replace(/,/g, ''));
+            // Fix: remove commas
+            const amount = parseInt(amountInput.value.replace(/,/g, '').replace(/[^0-9]/g, ''));
             const dateStr = dateInput.value;
             const description = formContainer.querySelector('#paymentDescription').value.trim();
             if (!employer) { employerSelect.classList.add('has-error'); return showNotification('لطفاً کارفرمای پرداخت کننده را انتخاب کنید.', 'error'); }
@@ -1061,9 +1114,9 @@
             }
             state.editingItemId = null;
             state.editingItemType = null;
-            DOM.formModal.style.display = 'none';
-            document.body.style.overflow = '';
             if(window.history.state && window.history.state.modal) window.history.back();
+            else DOM.formModal.style.display = 'none';
+            document.body.style.overflow = '';
             updateAll();
         }
 
@@ -1081,6 +1134,9 @@
                 setupDateInputMask(dateInput);
                 dateInput.value = payment.jalaliDate || getCurrentJalaliDate(); 
                 formEl.querySelector('#paymentDescription').value = payment.description; 
+                
+                setupCurrencyInput(formEl.querySelector('#paymentAmount'));
+
                 const submitBtn = formEl.querySelector('#paymentSubmitBtn'); 
                 submitBtn.textContent = 'به‌روزرسانی دریافتی'; 
                 submitBtn.className = 'btn btn-update'; 
@@ -1089,8 +1145,10 @@
                 cancelBtn.textContent = 'لغو'; 
                 cancelBtn.className = 'btn btn-secondary'; 
                 cancelBtn.addEventListener('click', () => { 
-                    state.editingItemId = null; state.editingItemType = null; DOM.formModal.style.display = 'none'; document.body.style.overflow = ''; 
+                    state.editingItemId = null; state.editingItemType = null; 
                     if(window.history.state && window.history.state.modal) window.history.back();
+                    else DOM.formModal.style.display = 'none'; 
+                    document.body.style.overflow = ''; 
                 }); 
                 submitBtn.parentElement.appendChild(cancelBtn); 
             }); 
@@ -1108,7 +1166,8 @@
             const dateInput = formContainer.querySelector('#expenseDate');
             const title = titleInput.value.trim();
             const category = formContainer.querySelector('#expenseCategory').value;
-            const amount = parseInt(amountInput.value.replace(/,/g, ''));
+            // Fix: remove commas
+            const amount = parseInt(amountInput.value.replace(/,/g, '').replace(/[^0-9]/g, ''));
             const dateStr = dateInput.value;
             const description = formContainer.querySelector('#expenseDescription').value.trim();
             if (!title) { titleInput.classList.add('has-error'); return showNotification('لطفاً عنوان هزینه را وارد کنید.', 'error'); }
@@ -1128,9 +1187,9 @@
             }
             state.editingItemId = null;
             state.editingItemType = null;
-            DOM.formModal.style.display = 'none';
-            document.body.style.overflow = '';
             if(window.history.state && window.history.state.modal) window.history.back();
+            else DOM.formModal.style.display = 'none';
+            document.body.style.overflow = '';
             updateAll();
         }
 
@@ -1149,6 +1208,9 @@
                 setupDateInputMask(dateInput);
                 dateInput.value = expense.jalaliDate || getCurrentJalaliDate(); 
                 formEl.querySelector('#expenseDescription').value = expense.description; 
+                
+                setupCurrencyInput(formEl.querySelector('#expenseAmount'));
+
                 const submitBtn = formEl.querySelector('#expenseSubmitBtn'); 
                 submitBtn.textContent = 'به‌روزرسانی هزینه'; 
                 submitBtn.className = 'btn btn-update'; 
@@ -1157,8 +1219,10 @@
                 cancelBtn.textContent = 'لغو'; 
                 cancelBtn.className = 'btn btn-secondary'; 
                 cancelBtn.addEventListener('click', () => { 
-                    state.editingItemId = null; state.editingItemType = null; DOM.formModal.style.display = 'none'; document.body.style.overflow = ''; 
+                    state.editingItemId = null; state.editingItemType = null; 
                     if(window.history.state && window.history.state.modal) window.history.back();
+                    else DOM.formModal.style.display = 'none'; 
+                    document.body.style.overflow = ''; 
                 }); 
                 submitBtn.parentElement.appendChild(cancelBtn); 
             }); 
@@ -1478,7 +1542,25 @@
                 });
             });
 
-            DOM.setGoalsBtn.addEventListener('click', () => { showFormInModal('تنظیم اهداف ماهانه', 'goals-form-template', (formEl) => { const monthKey = `${moment().jYear()}-${moment().jMonth()}`; const currentGoals = state.goals[monthKey]; if (currentGoals) { formEl.querySelector('#incomeGoal').value = currentGoals.income; formEl.querySelector('#expenseGoal').value = currentGoals.expenses; } formEl.querySelector('#saveGoalsSubmitBtn').addEventListener('click', () => saveGoals(formEl)); }); });
+            DOM.setGoalsBtn.addEventListener('click', () => { 
+                showFormInModal('تنظیم اهداف ماهانه', 'goals-form-template', (formEl) => { 
+                    const monthKey = `${moment().jYear()}-${moment().jMonth()}`; 
+                    const currentGoals = state.goals[monthKey]; 
+                    
+                    const incomeInput = formEl.querySelector('#incomeGoal');
+                    const expenseInput = formEl.querySelector('#expenseGoal');
+                    
+                    setupCurrencyInput(incomeInput);
+                    setupCurrencyInput(expenseInput);
+
+                    if (currentGoals) { 
+                        incomeInput.value = formatNumber(currentGoals.income); 
+                        expenseInput.value = formatNumber(currentGoals.expenses); 
+                    } 
+                    
+                    formEl.querySelector('#saveGoalsSubmitBtn').addEventListener('click', () => saveGoals(formEl)); 
+                }); 
+            });
             
             updateAll(); 
             switchPage('dashboard-page');
