@@ -7,12 +7,15 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>حساب‌یار فریلنسر</title>
+    
+    <!-- فونت و آیکون -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/rastikerdar/vazirmatn@v33.003/Vazirmatn-font-face.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- کتابخانه‌ها -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jalali-moment/dist/jalali-moment.browser.js"></script>
-    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/shepherd.js@10.0.1/dist/css/shepherd.css"/>
     <script src="https://cdn.jsdelivr.net/npm/shepherd.js@10.0.1/dist/js/shepherd.min.js"></script>
     
@@ -27,7 +30,6 @@
             --bg-color: #111827; --card-bg-color: #1F2937; --text-primary: #F9FAFB; --text-secondary: #9CA3AF; --border-color: #374151; --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.2), 0 2px 4px -2px rgb(0 0 0 / 0.2); --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.2), 0 4px 6px -4px rgb(0 0 0 / 0.2);
         }
         
-        /* سایر تم‌ها */
         body.theme-midnight { color-scheme: dark; --primary-color: #8B5CF6; --primary-hover: #7C3AED; --bg-color: #1E293B; --card-bg-color: #334155; --text-primary: #F1F5F9; --text-secondary: #94A3B8; --border-color: #475569; }
         body.theme-green { color-scheme: light; --primary-color: #10B981; --primary-hover: #059669; --info-color: #3B82F6; --info-hover: #2563EB; --bg-color: #F0FDF4; --card-bg-color: #FFFFFF; --border-color: #D1FAE5; }
         body.theme-ocean { color-scheme: light; --primary-color: #2563EB; --primary-hover: #1D4ED8; --bg-color: #EFF6FF; --card-bg-color: #FFFFFF; --text-primary: #1E3A8A; --text-secondary: #64748B; --border-color: #DBEAFE; --success-color: #16A34A; --danger-color: #DC2626; --warning-color: #D97706; }
@@ -36,17 +38,46 @@
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: var(--font-family); background-color: var(--bg-color); color: var(--text-primary); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; transition: background-color 0.3s ease, color 0.3s ease; user-select: none; -webkit-tap-highlight-color: transparent; }
         
-        /* انیمیشن لودینگ */
+        ::-webkit-scrollbar { width: 0px; background: transparent; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
         .fa-spin-fast { animation: spin 0.8s infinite linear; }
 
-        .page-back-button-container { margin-bottom: 16px; }
-        .page-back-button { background: none; border: none; color: var(--text-secondary); font-family: var(--font-family); font-size: 16px; font-weight: 500; cursor: pointer; padding: 8px 12px; border-radius: 8px; transition: background-color 0.2s; }
-        .page-back-button:hover { background-color: var(--border-color); }
-        .page-back-button i { margin-left: 8px; }
+        /* استایل هدر یکپارچه و نیتیو */
+        .page-header { 
+            display: flex; 
+            align-items: center; 
+            height: 56px;
+            margin-bottom: 24px;
+            position: relative;
+            padding: 0 4px;
+        }
 
-        .page-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
-        .page-header h1 { margin-bottom: 0; }
+        .header-start {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-grow: 1;
+        }
+
+        .native-back-btn {
+            background: none;
+            border: none;
+            color: var(--text-primary);
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: none; /* پیش‌فرض مخفی */
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            font-size: 18px;
+            margin-right: -12px;
+        }
+        .native-back-btn:active { background-color: var(--border-color); }
+
+        .page-header h1 { margin: 0; font-size: 20px; font-weight: 700; }
+
         #header-theme-toggle { display: none; background: none; border: none; font-size: 22px; color: var(--text-secondary); cursor: pointer; padding: 8px; }
         #header-theme-toggle .theme-icon-wrapper { position: relative; display: flex; align-items: center; justify-content: center; width: 22px; height: 22px; }
         #header-theme-toggle .theme-icon-wrapper i { position: absolute; transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out; }
@@ -79,8 +110,13 @@
         input[type="search"] { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24' 24' fill='%2399A3AF'%3E%3Cpath d='M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: 15px center; background-size: 20px; padding-right: 45px; }
         body.theme-dark input[type="search"], body.theme-midnight input[type="search"], body.theme-royal input[type="search"] { background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24' 24' fill='%23F9FAFB'%3E%3Cpath d='M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z'/%3E%3C/svg%3E"); }
         input:focus, textarea:focus, select:focus { border-color: var(--primary-color); outline: none; box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2); }
-        .btn { background-color: var(--primary-color); color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: 600; width: 100%; transition: all 0.2s ease; font-family: var(--font-family); display: flex; justify-content: center; align-items: center; gap: 8px; }
-        .btn:hover { background-color: var(--primary-hover); transform: translateY(-2px); } .btn:active { transform: translateY(0); filter: brightness(0.95); } .btn-success { background-color: var(--success-color); } .btn-success:hover { background-color: var(--success-hover); } .btn-danger { background-color: var(--danger-color); } .btn-danger:hover { background-color: var(--danger-hover); } .btn-info { background-color: var(--info-color); } .btn-info:hover { background-color: var(--info-hover); } .btn-update { background-color: var(--warning-color); } .btn-update:hover { background-color: var(--warning-hover); } .btn-secondary { background-color: var(--secondary-color); } .btn-secondary:hover { background-color: var(--secondary-hover); } .btn-light { background-color: var(--bg-color); color: var(--text-primary); border: 1px solid var(--border-color); } .btn-light:hover { background-color: #E5E7EB; }
+        
+        .btn { 
+            background-color: var(--primary-color); color: white; border: none; padding: 12px 20px; border-radius: 8px; cursor: pointer; font-size: 16px; font-weight: 600; width: 100%; transition: transform 0.1s ease, background-color 0.2s; font-family: var(--font-family); display: flex; justify-content: center; align-items: center; gap: 8px; position: relative; overflow: hidden; 
+        }
+        .btn:hover { background-color: var(--primary-hover); } 
+        .btn:active { transform: scale(0.98); }
+        .btn-success { background-color: var(--success-color); } .btn-success:hover { background-color: var(--success-hover); } .btn-danger { background-color: var(--danger-color); } .btn-danger:hover { background-color: var(--danger-hover); } .btn-info { background-color: var(--info-color); } .btn-info:hover { background-color: var(--info-hover); } .btn-update { background-color: var(--warning-color); } .btn-update:hover { background-color: var(--warning-hover); } .btn-secondary { background-color: var(--secondary-color); } .btn-secondary:hover { background-color: var(--secondary-hover); } .btn-light { background-color: var(--bg-color); color: var(--text-primary); border: 1px solid var(--border-color); } .btn-light:hover { background-color: #E5E7EB; }
         body.theme-dark .btn-light:hover, body.theme-midnight .btn-light:hover, body.theme-royal .btn-light:hover { background-color: #374151; }
         
         .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; flex-wrap: wrap; gap: 16px; }
@@ -96,9 +132,9 @@
         .payment-amount { font-weight: 700; color: var(--success-color); font-size: 16px; }
         .expense-amount { font-weight: 700; color: var(--danger-color); font-size: 16px; }
         .item-actions { display: flex; gap: 8px; }
-        .item-actions .action-btn { background-color: var(--bg-color); color: var(--text-secondary); border: 1px solid var(--border-color); width: 32px; height: 32px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 14px; transition: all 0.2s ease; }
+        .item-actions .action-btn { background-color: var(--bg-color); color: var(--text-secondary); border: 1px solid var(--border-color); width: 32px; height: 32px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; font-size: 14px; transition: all 0.2s ease; position: relative; overflow: hidden; }
         .item-actions .action-btn:hover { background-color: var(--border-color); color: var(--text-primary); }
-        .item-actions .action-btn:active { filter: brightness(0.95); }
+        .item-actions .action-btn:active { transform: scale(0.9); }
         .empty-state { text-align: center; padding: 40px; color: var(--text-secondary); background-color: var(--bg-color); border-radius: var(--border-radius); border: 2px dashed var(--border-color); }
         .empty-state i { font-size: 48px; margin-bottom: 16px; color: var(--border-color); }
         .dashboard-hero-card { display: flex; flex-wrap: wrap; justify-content: space-around; align-items: center; text-align: center; padding: 20px; }
@@ -126,13 +162,38 @@
         .summary-row:last-child { border: none; }
         .summary-balance.positive { color: var(--success-color); }
         .summary-balance.negative { color: var(--danger-color); }
-        .notification { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); background-color: var(--info-color); color: white; padding: 12px 24px; border-radius: 8px; box-shadow: var(--shadow-lg); display: none; z-index: 3000; font-size: 16px; font-weight: 500; align-items: center; gap: 20px; }
-        .notification.success { background-color: var(--success-color); }
-        .notification.error { background-color: var(--danger-color); }
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: center; z-index: 2000; animation: fadeIn 0.3s ease; }
-        .modal-content { background: var(--card-bg-color); padding: 32px; border-radius: var(--border-radius); width: 90%; max-width: 600px; max-height: 90vh; overflow-y: auto; box-shadow: var(--shadow-lg); }
+        
+        /* Toast Notification */
+        .notification { 
+            position: fixed; bottom: 90px; left: 50%; transform: translateX(-50%) translateY(20px); 
+            background-color: #333; color: white; padding: 12px 24px; border-radius: 50px; 
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3); display: none; z-index: 3000; 
+            font-size: 14px; font-weight: 500; align-items: center; gap: 15px; 
+            opacity: 0; transition: all 0.3s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+            max-width: 90%; text-align: center;
+        }
+        .notification.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .notification.success { background-color: #10B981; }
+        .notification.error { background-color: #EF4444; }
+        
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: flex-end; z-index: 2000; }
+        
+        .modal-content { 
+            background: var(--card-bg-color); padding: 24px; 
+            border-radius: 24px 24px 0 0; width: 100%; max-width: 600px; 
+            max-height: 85vh; overflow-y: auto; box-shadow: 0 -4px 20px rgba(0,0,0,0.2);
+            animation: slideUp 0.3s ease-out;
+        }
+        
+        @media (min-width: 769px) {
+            .modal-overlay { align-items: center; }
+            .modal-content { border-radius: var(--border-radius); width: 90%; animation: fadeIn 0.3s ease; }
+        }
+
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
         .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 16px; margin-bottom: 24px; }
-        .modal-header h2 { margin: 0; font-size: 22px; }
+        .modal-header h2 { margin: 0; font-size: 20px; }
         .modal-close-btn { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--text-secondary); }
         .modal-footer { margin-top: 24px; display: flex; justify-content: flex-end; gap: 12px; }
         .progress-bar-container { background-color: var(--border-color); border-radius: 5px; height: 8px; margin-top: 8px; overflow: hidden; }
@@ -193,6 +254,7 @@
             background-color: var(--primary-hover);
             transform: translateX(-50%) translateY(-3px) scale(1.05);
         }
+        .mobile-nav-center-btn:active { transform: translateX(-50%) scale(0.95); }
 
         .more-menu-list { display: flex; flex-direction: column; gap: 12px; }
         .more-menu-item {
@@ -212,56 +274,17 @@
             box-shadow: var(--shadow-lg);
             border-color: var(--primary-color);
         }
-        .more-menu-item .icon {
-            font-size: 20px;
-            color: var(--text-secondary);
-            margin-left: 16px;
-            width: 24px;
-            text-align: center;
-        }
-        .more-menu-item .text {
-            flex-grow: 1;
-            font-weight: 600;
-            font-size: 16px;
-        }
-        .more-menu-item .chevron {
-            font-size: 16px;
-            color: var(--text-secondary);
-        }
+        .more-menu-item:active { transform: scale(0.98); }
+        
+        .more-menu-item .icon { font-size: 20px; color: var(--text-secondary); margin-left: 16px; width: 24px; text-align: center; }
+        .more-menu-item .text { flex-grow: 1; font-weight: 600; font-size: 16px; }
+        .more-menu-item .chevron { font-size: 16px; color: var(--text-secondary); }
 
-        .theme-selector {
-            display: flex;
-            gap: 12px;
-            flex-wrap: wrap;
-        }
-        .theme-selector label {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            cursor: pointer;
-            gap: 8px;
-            padding: 12px;
-            border-radius: 8px;
-            border: 2px solid transparent;
-            transition: all 0.2s ease;
-        }
-        .theme-selector input[type="radio"] {
-            display: none;
-        }
-        .theme-selector .theme-preview {
-            width: 40px;
-            height: 40px;
-            border-radius: 50%;
-            border: 2px solid var(--border-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 18px;
-        }
-        .theme-selector input:checked + label {
-            border-color: var(--primary-color);
-            background-color: var(--bg-color);
-        }
+        .theme-selector { display: flex; gap: 12px; flex-wrap: wrap; }
+        .theme-selector label { display: flex; flex-direction: column; align-items: center; cursor: pointer; gap: 8px; padding: 12px; border-radius: 8px; border: 2px solid transparent; transition: all 0.2s ease; }
+        .theme-selector input[type="radio"] { display: none; }
+        .theme-selector .theme-preview { width: 40px; height: 40px; border-radius: 50%; border: 2px solid var(--border-color); display: flex; justify-content: center; align-items: center; font-size: 18px; }
+        .theme-selector input:checked + label { border-color: var(--primary-color); background-color: var(--bg-color); }
         .preview-light { background-color: #F3F4F6; color: #1F2937; }
         .preview-dark { background-color: #111827; color: #F9FAFB; }
         .preview-green { background-color: #F0FDF4; color: #059669; }
@@ -278,15 +301,6 @@
         .goal-header span:last-child { font-weight: 700; color: var(--text-primary); }
         .goal-footer { margin-top: 8px; font-size: 12px; }
         
-        /* استایل لیست تاریخچه اهداف */
-        .goal-history-list { display: flex; flex-direction: column; gap: 10px; max-height: 300px; overflow-y: auto; }
-        .goal-history-item { display: flex; justify-content: space-between; align-items: center; padding: 12px; border-radius: 8px; border: 1px solid var(--border-color); background-color: var(--bg-color); }
-        .goal-history-item.success { border-right: 4px solid var(--success-color); }
-        .goal-history-item.fail { border-right: 4px solid var(--danger-color); }
-        .goal-history-item.super { border-right: 4px solid var(--warning-color); background-color: #FFFBEB; } /* Gold bg for light theme */
-        body.theme-dark .goal-history-item.super, body.theme-midnight .goal-history-item.super, body.theme-royal .goal-history-item.super { background-color: #422006; }
-        .goal-history-icon { font-size: 18px; width: 24px; text-align: center; }
-        
         .shepherd-element { background: var(--card-bg-color); border-radius: var(--border-radius); box-shadow: var(--shadow-lg); font-family: var(--font-family); max-width: 400px; }
         .shepherd-header { background-color: var(--bg-color); padding: 1rem; }
         .shepherd-title { color: var(--text-primary); font-weight: 700; }
@@ -294,6 +308,30 @@
         .shepherd-button { background: var(--primary-color); color: white; border-radius: 8px; padding: 0.75rem 1.5rem; margin: 0 0.5rem; font-family: var(--font-family); font-weight: 600; }
         .shepherd-button:not(:disabled):hover { background: var(--primary-hover); }
         .shepherd-button.shepherd-button-secondary { background: var(--bg-color); color: var(--text-secondary); }
+
+        /* --- استایل‌های جدید پشتیبان‌گیری و سوئیچ --- */
+        .switch-container { display: flex; justify-content: space-between; align-items: center; padding: 8px 0; }
+        .switch { position: relative; display: inline-block; width: 44px; height: 24px; }
+        .switch input { opacity: 0; width: 0; height: 0; }
+        .slider { position: absolute; cursor: pointer; top: 0; left: 0; right: 0; bottom: 0; background-color: var(--border-color); transition: .4s; border-radius: 24px; }
+        .slider:before { position: absolute; content: ""; height: 18px; width: 18px; left: 3px; bottom: 3px; background-color: white; transition: .4s; border-radius: 50%; box-shadow: 0 1px 3px rgba(0,0,0,0.2); }
+        input:checked + .slider { background-color: var(--primary-color); }
+        input:checked + .slider:before { transform: translateX(20px); }
+
+        .backup-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 16px; }
+        .action-card-btn { display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 16px 12px; background-color: var(--bg-color); border: 2px solid transparent; border-radius: 16px; cursor: pointer; transition: all 0.2s ease; text-align: center; height: 100%; position: relative; overflow: hidden; color: var(--text-primary); }
+        .action-card-btn i { font-size: 24px; margin-bottom: 8px; padding: 12px; border-radius: 50%; background-color: var(--card-bg-color); box-shadow: var(--shadow); transition: transform 0.2s ease; }
+        .action-card-btn .btn-title { font-weight: 700; font-size: 14px; margin-bottom: 4px; }
+        .action-card-btn .btn-desc { font-size: 11px; color: var(--text-secondary); font-weight: 400; }
+        .action-card-btn:active { transform: scale(0.96); }
+        .action-card-btn.download-btn { background-color: rgba(59, 130, 246, 0.1); border-color: rgba(59, 130, 246, 0.2); color: var(--primary-color); }
+        .action-card-btn.download-btn i { color: var(--primary-color); }
+        .action-card-btn.restore-btn { background-color: var(--bg-color); border-color: var(--border-color); }
+        .action-card-btn.restore-btn i { color: var(--text-secondary); }
+        .action-card-btn.excel-btn { grid-column: span 2; flex-direction: row; gap: 12px; background-color: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.2); color: var(--success-color); }
+        .action-card-btn.excel-btn i { margin-bottom: 0; font-size: 18px; color: var(--success-color); }
+        .action-card-btn.excel-btn .text-wrapper { display: flex; flex-direction: column; align-items: flex-start; }
+        body.theme-dark .action-card-btn i, body.theme-midnight .action-card-btn i { background-color: rgba(255,255,255,0.05); }
 
         @media (max-width: 768px) {
             .app-layout { flex-direction: column; }
@@ -307,8 +345,6 @@
             .hero-metric-divider { display: none; }
             #works-filters, #payments-filters, #expenses-filters { display: grid; grid-template-columns: 1fr; gap: 10px; margin-bottom: 16px; }
             .modal-overlay { align-items: flex-end; }
-            .modal-content { position: fixed; bottom: 0; left: 0; right: 0; width: 100%; max-width: 100%; max-height: 90vh; border-radius: 20px 20px 0 0; transform: translateY(100%); transition: transform 0.3s ease-out; }
-            .modal-overlay[style*="display: flex"] .modal-content { transform: translateY(0); }
             .modal-header { padding-top: 12px; position: relative; }
             .modal-header::before { content: ''; position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 40px; height: 4px; background-color: var(--border-color); border-radius: 2px; }
         }
@@ -375,17 +411,16 @@
     <div class="app-layout">
         <aside class="sidebar"><div class="sidebar-header"><i class="fa-solid fa-wallet logo-icon"></i><h1>مدیریت مالی</h1></div><nav class="nav-menu"><button class="nav-btn active" data-page="dashboard-page"><i class="fa-solid fa-table-columns"></i><span>داشبورد</span></button><button class="nav-btn" data-page="employers-page"><i class="fa-solid fa-users"></i><span>کارفرمایان</span></button><button class="nav-btn" data-page="works-page"><i class="fa-solid fa-briefcase"></i><span>مدیریت کارها</span></button><button class="nav-btn" data-page="payments-page"><i class="fa-solid fa-hand-holding-dollar"></i><span>دریافتی‌ها</span></button><button class="nav-btn" data-page="expenses-page"><i class="fa-solid fa-receipt"></i><span>هزینه‌ها</span></button><button class="nav-btn" data-page="settings-page"><i class="fa-solid fa-cog"></i><span>تنظیمات</span></button></nav></aside>
         <main class="main-content">
-            <section class="page-content active" id="dashboard-page"><div class="page-header"><h1>داشبورد</h1><button id="header-theme-toggle" class="header-theme-toggle-btn"><span class="theme-icon-wrapper"><i class="fas fa-moon"></i><i class="fas fa-sun"></i></span></button></div><div class="card dashboard-hero-card"><div class="hero-metric"><div class="label">درآمد این ماه</div><div class="value positive" id="dashboard-monthly-income">۰ تومان</div></div><div class="hero-metric-divider"></div><div class="hero-metric main-balance"><div class="label" id="dashboard-balance-label">مانده کل حساب</div><div class="value" id="dashboard-balance">۰ تومان</div></div><div class="hero-metric-divider"></div><div class="hero-metric"><div class="label">هزینه این ماه</div><div class="value negative" id="dashboard-monthly-expenses">۰ تومان</div></div></div><div class="dashboard-main-grid"><div class="card"><h2 style="margin-top:0;">روند درآمد و هزینه (۶ ماه اخیر)</h2><div style="height: 350px;"><canvas id="incomeExpenseChart"></canvas></div></div><div class="dashboard-lists-container"><div class="card" id="goals-card"><div class="card-header"><h2 style="margin-top:0;">اهداف مالی این ماه</h2><button class="action-btn" id="set-goals-btn" title="تنظیم اهداف"><i class="fas fa-cog"></i></button></div><div id="goals-display"><div class="goal-tracker"><div class="goal-header"><span>هدف درآمد</span><span id="income-goal-value">تعیین نشده</span></div><div class="progress-bar-container"><div class="progress-bar" id="income-goal-progress" style="width: 0%;"></div></div><div class="goal-footer"><span id="income-goal-current">۰ تومان</span></div></div><div class="goal-tracker"><div class="goal-header"><span>سقف هزینه</span><span id="expense-goal-value">تعیین نشده</span></div><div class="progress-bar-container"><div class="progress-bar" id="expense-goal-progress" style="width: 0%;"></div></div><div class="goal-footer"><span id="expense-goal-current">۰ تومان</span></div></div></div></div><div class="card list-card"><div class="section-header collapsible-header" style="margin-bottom: 0; padding-bottom: 0;"><div class="section-title" style="width: 100%;"><i class="fas fa-chevron-down toggle-icon"></i><h2 style="margin:0; padding:0; border:none; font-size: 18px;">بدهکارترین کارفرمایان</h2></div></div><div class="collapsible-content" id="dashboard-debtors-content"><div id="dashboard-top-debtors"></div></div></div><div class="card list-card"><div class="section-header collapsible-header" style="margin-bottom: 0; padding-bottom: 0;"><div class="section-title" style="width: 100%;"><i class="fas fa-chevron-down toggle-icon"></i><h2 style="margin:0; padding:0; border:none; font-size: 18px;">کارهای تسویه نشده اخیر</h2></div></div><div class="collapsible-content" id="dashboard-unsettled-content"><div id="dashboard-recent-unsettled"></div></div></div></div></div></section>
+            <section class="page-content active" id="dashboard-page"><div class="page-header"><div class="header-start"><button class="native-back-btn" onclick="window.history.back()"><i class="fas fa-arrow-right"></i></button><h1>داشبورد</h1></div><button id="header-theme-toggle" class="header-theme-toggle-btn"><span class="theme-icon-wrapper"><i class="fas fa-moon"></i><i class="fas fa-sun"></i></span></button></div><div class="card dashboard-hero-card"><div class="hero-metric"><div class="label">درآمد این ماه</div><div class="value positive" id="dashboard-monthly-income">۰ تومان</div></div><div class="hero-metric-divider"></div><div class="hero-metric main-balance"><div class="label" id="dashboard-balance-label">مانده کل حساب</div><div class="value" id="dashboard-balance">۰ تومان</div></div><div class="hero-metric-divider"></div><div class="hero-metric"><div class="label">هزینه این ماه</div><div class="value negative" id="dashboard-monthly-expenses">۰ تومان</div></div></div><div class="dashboard-main-grid"><div class="card"><h2 style="margin-top:0;">روند درآمد و هزینه (۶ ماه اخیر)</h2><div style="height: 350px;"><canvas id="incomeExpenseChart"></canvas></div></div><div class="dashboard-lists-container"><div class="card" id="goals-card"><div class="card-header"><h2 style="margin-top:0;">اهداف مالی این ماه</h2><button class="action-btn" id="set-goals-btn" title="تنظیم اهداف"><i class="fas fa-cog"></i></button></div><div id="goals-display"><div class="goal-tracker"><div class="goal-header"><span>هدف درآمد</span><span id="income-goal-value">تعیین نشده</span></div><div class="progress-bar-container"><div class="progress-bar" id="income-goal-progress" style="width: 0%;"></div></div><div class="goal-footer"><span id="income-goal-current">۰ تومان</span></div></div><div class="goal-tracker"><div class="goal-header"><span>سقف هزینه</span><span id="expense-goal-value">تعیین نشده</span></div><div class="progress-bar-container"><div class="progress-bar" id="expense-goal-progress" style="width: 0%;"></div></div><div class="goal-footer"><span id="expense-goal-current">۰ تومان</span></div></div></div></div><div class="card list-card"><div class="section-header collapsible-header" style="margin-bottom: 0; padding-bottom: 0;"><div class="section-title" style="width: 100%;"><i class="fas fa-chevron-down toggle-icon"></i><h2 style="margin:0; padding:0; border:none; font-size: 18px;">بدهکارترین کارفرمایان</h2></div></div><div class="collapsible-content" id="dashboard-debtors-content"><div id="dashboard-top-debtors"></div></div></div><div class="card list-card"><div class="section-header collapsible-header" style="margin-bottom: 0; padding-bottom: 0;"><div class="section-title" style="width: 100%;"><i class="fas fa-chevron-down toggle-icon"></i><h2 style="margin:0; padding:0; border:none; font-size: 18px;">کارهای تسویه نشده اخیر</h2></div></div><div class="collapsible-content" id="dashboard-unsettled-content"><div id="dashboard-recent-unsettled"></div></div></div></div></div></section>
             
-            <section class="page-content" id="employers-page"><div class="page-back-button-container" data-page-back-btn></div><div class="page-header"><h1>کارفرمایان</h1><button id="header-theme-toggle" class="header-theme-toggle-btn"><span class="theme-icon-wrapper"><i class="fas fa-moon"></i><i class="fas fa-sun"></i></span></button></div><div id="employerListView"><div class="section-header"><input type="search" id="employerSearchInput" placeholder="جستجوی کارفرما..." style="max-width: 300px; width:100%;"></div><div id="employersListContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px;"></div></div><div id="employerDetailView"><button id="backToEmployersList" class="btn btn-secondary" style="width: auto; margin-bottom: 24px;"><i class="fas fa-arrow-right" style="margin-left: 8px;"></i> بازگشت به لیست</button><div style="display: flex; align-items: center; gap: 12px; margin-bottom: 24px;"><h1 id="employerDetailName" style="margin-bottom: 0;"></h1><button class="action-btn edit-btn" id="editEmployerNameBtn" title="ویرایش نام کارفرما" style="background: var(--warning-color); color: white; border: none;"><i class="fas fa-pencil-alt"></i></button></div><div class="dashboard-hero-card card"><div class="hero-metric"><div class="label">جمع کل کارها</div><div class="value" id="employerDetailTotalWork">۰ تومان</div></div><div class="hero-metric-divider"></div><div class="hero-metric main-balance"><div class="label" id="employerDetailBalanceLabel">مانده حساب</div><div class="value" id="employerDetailBalance">۰ تومان</div></div><div class="hero-metric-divider"></div><div class="hero-metric"><div class="label">جمع کل دریافتی‌ها</div><div class="value positive" id="employerDetailTotalPaid">۰ تومان</div></div></div><div class="card"><h2 style="margin-top:0;">کارهای تسویه نشده</h2><div id="employerDetailUnsettledWorks"></div></div><div class="card"><h2 style="margin-top:0;">آخرین دریافتی‌ها</h2><div id="employerDetailRecentPayments"></div></div></div></section>
+            <section class="page-content" id="employers-page"><div class="page-header"><div class="header-start"><button class="native-back-btn" onclick="window.history.back()"><i class="fas fa-arrow-right"></i></button><h1>کارفرمایان</h1></div><button id="header-theme-toggle" class="header-theme-toggle-btn"><span class="theme-icon-wrapper"><i class="fas fa-moon"></i><i class="fas fa-sun"></i></span></button></div><div id="employerListView"><div class="section-header"><input type="search" id="employerSearchInput" placeholder="جستجوی کارفرما..." style="max-width: 300px; width:100%;"></div><div id="employersListContainer" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 16px;"></div></div><div id="employerDetailView"><button id="backToEmployersList" class="btn btn-secondary" style="width: auto; margin-bottom: 24px;"><i class="fas fa-arrow-right" style="margin-left: 8px;"></i> بازگشت به لیست</button><div style="display: flex; align-items: center; gap: 12px; margin-bottom: 24px;"><h1 id="employerDetailName" style="margin-bottom: 0;"></h1><button class="action-btn edit-btn" id="editEmployerNameBtn" title="ویرایش نام کارفرما" style="background: var(--warning-color); color: white; border: none;"><i class="fas fa-pencil-alt"></i></button></div><div class="dashboard-hero-card card"><div class="hero-metric"><div class="label">جمع کل کارها</div><div class="value" id="employerDetailTotalWork">۰ تومان</div></div><div class="hero-metric-divider"></div><div class="hero-metric main-balance"><div class="label" id="employerDetailBalanceLabel">مانده حساب</div><div class="value" id="employerDetailBalance">۰ تومان</div></div><div class="hero-metric-divider"></div><div class="hero-metric"><div class="label">جمع کل دریافتی‌ها</div><div class="value positive" id="employerDetailTotalPaid">۰ تومان</div></div></div><div class="card"><h2 style="margin-top:0;">کارهای تسویه نشده</h2><div id="employerDetailUnsettledWorks"></div></div><div class="card"><h2 style="margin-top:0;">آخرین دریافتی‌ها</h2><div id="employerDetailRecentPayments"></div></div></div></section>
 
-            <section class="page-content" id="works-page"><div class="page-header"><h1>مدیریت کارها</h1><button id="header-theme-toggle" class="header-theme-toggle-btn"><span class="theme-icon-wrapper"><i class="fas fa-moon"></i><i class="fas fa-sun"></i></span></button></div><div id="works-filters" class="card"><div style="display: flex; gap: 10px; flex-wrap: wrap;"><input type="search" id="workSearchInput" placeholder="جستجوی کار..." style="flex-grow: 1; min-width: 200px;"><select id="workEmployerFilter" style="flex-grow: 1; min-width: 200px;"></select></div></div><div class="card"><div class="section-header collapsible-header"><div class="section-title"><i class="fas fa-chevron-down toggle-icon"></i>لیست کارها</div><div class="section-count" id="worksCount">0 مورد</div></div><div class="works-list collapsible-content" id="worksList"></div><div class="pagination-controls" id="worksPagination"></div></div></section>
+            <section class="page-content" id="works-page"><div class="page-header"><div class="header-start"><button class="native-back-btn" onclick="window.history.back()"><i class="fas fa-arrow-right"></i></button><h1>مدیریت کارها</h1></div><button id="header-theme-toggle" class="header-theme-toggle-btn"><span class="theme-icon-wrapper"><i class="fas fa-moon"></i><i class="fas fa-sun"></i></span></button></div><div id="works-filters" class="card"><div style="display: flex; gap: 10px; flex-wrap: wrap;"><input type="search" id="workSearchInput" placeholder="جستجوی کار..." style="flex-grow: 1; min-width: 200px;"><select id="workEmployerFilter" style="flex-grow: 1; min-width: 200px;"></select></div></div><div class="card"><div class="section-header collapsible-header"><div class="section-title"><i class="fas fa-chevron-down toggle-icon"></i>لیست کارها</div><div class="section-count" id="worksCount">0 مورد</div></div><div class="works-list collapsible-content" id="worksList"></div><div class="pagination-controls" id="worksPagination"></div></div></section>
             
-            <section class="page-content" id="payments-page"><div class="page-back-button-container" data-page-back-btn></div><div class="page-header"><h1>دریافتی‌ها</h1><button id="header-theme-toggle" class="header-theme-toggle-btn"><span class="theme-icon-wrapper"><i class="fas fa-moon"></i><i class="fas fa-sun"></i></span></button></div><div class="card" id="payments-filters"><input type="search" id="paymentSearchInput" placeholder="جستجوی دریافتی بر اساس کارفرما یا توضیحات..."></div><div class="card"><div class="section-header collapsible-header"><div class="section-title" style="flex-grow: 1;"><i class="fas fa-chevron-down toggle-icon"></i>لیست دریافتی‌ها</div><div class="section-count" id="paymentsCount">0 مورد</div></div><div class="payments-list collapsible-content" id="paymentsList"></div></div></section>
+            <section class="page-content" id="payments-page"><div class="page-header"><div class="header-start"><button class="native-back-btn" onclick="window.history.back()"><i class="fas fa-arrow-right"></i></button><h1>دریافتی‌ها</h1></div><button id="header-theme-toggle" class="header-theme-toggle-btn"><span class="theme-icon-wrapper"><i class="fas fa-moon"></i><i class="fas fa-sun"></i></span></button></div><div class="card" id="payments-filters"><input type="search" id="paymentSearchInput" placeholder="جستجوی دریافتی بر اساس کارفرما یا توضیحات..."></div><div class="card"><div class="section-header collapsible-header"><div class="section-title" style="flex-grow: 1;"><i class="fas fa-chevron-down toggle-icon"></i>لیست دریافتی‌ها</div><div class="section-count" id="paymentsCount">0 مورد</div></div><div class="payments-list collapsible-content" id="paymentsList"></div></div></section>
             
             <section class="page-content" id="expenses-page">
-                <div class="page-back-button-container" data-page-back-btn></div>
-                <div class="page-header"><h1>هزینه‌ها</h1><button id="header-theme-toggle" class="header-theme-toggle-btn"><span class="theme-icon-wrapper"><i class="fas fa-moon"></i><i class="fas fa-sun"></i></span></button></div>
+                <div class="page-header"><div class="header-start"><button class="native-back-btn" onclick="window.history.back()"><i class="fas fa-arrow-right"></i></button><h1>هزینه‌ها</h1></div><button id="header-theme-toggle" class="header-theme-toggle-btn"><span class="theme-icon-wrapper"><i class="fas fa-moon"></i><i class="fas fa-sun"></i></span></button></div>
                 <div class="card">
                     <h2 style="margin-top: 0;">دسته‌بندی هزینه‌ها</h2>
                     <div style="height: 350px; position: relative;">
@@ -396,13 +431,28 @@
                 <div class="card" id="expenses-filters"><input type="search" id="expenseSearchInput" placeholder="جستجوی هزینه بر اساس عنوان یا توضیحات..."></div>
                 <div class="card"><div class="section-header collapsible-header"><div class="section-title" style="flex-grow: 1;"><i class="fas fa-chevron-down toggle-icon"></i>لیست هزینه‌ها</div><div class="section-count" id="expensesCount">0 مورد</div></div><div class="expenses-list collapsible-content" id="expensesList"></div></div>
             </section>
-
-            <section class="page-content" id="settings-page">
-                <div class="page-back-button-container" data-page-back-btn></div>
-                <div class="page-header"><h1>تنظیمات</h1><button id="header-theme-toggle" class="header-theme-toggle-btn"><span class="theme-icon-wrapper"><i class="fas fa-moon"></i><i class="fas fa-sun"></i></span></button></div>
+            
+            <section class="page-content" id="reports-page">
+                <div class="page-header"><div class="header-start"><button class="native-back-btn" onclick="window.history.back()"><i class="fas fa-arrow-right"></i></button><h1>گزارش‌ها و نمودارها</h1></div><button id="header-theme-toggle" class="header-theme-toggle-btn"><span class="theme-icon-wrapper"><i class="fas fa-moon"></i><i class="fas fa-sun"></i></span></button></div>
                 
                 <div class="card">
-                    <h2 style="margin-top:0; border: none; padding: 0;">حالت نمایش (تم)</h2>
+                    <h2 style="margin-top:0;">گزارش‌گیری پیشرفته</h2>
+                    <p style="color:var(--text-secondary); margin-bottom:16px; font-size:14px;">بازه زمانی مورد نظر را برای مشاهده درآمد و هزینه‌ها انتخاب کنید.</p>
+                    <div class="custom-report-form" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; align-items: end;">
+                        <div class="form-group"><label for="reportStartDate">از تاریخ</label><input type="text" inputmode="numeric" id="reportStartDate" placeholder="مثال: 1403/01/01"></div>
+                        <div class="form-group"><label for="reportEndDate">تا تاریخ</label><input type="text" inputmode="numeric" id="reportEndDate" placeholder="مثال: 1403/01/31"></div>
+                        <button class="btn btn-primary" id="generateCustomReportBtn"><i class="fas fa-search" style="margin-left:8px;"></i> مشاهده گزارش</button>
+                    </div>
+                </div>
+
+                <div class="card"><h2 style="margin-top: 0;">نمودار درآمد ماهانه</h2><div style="height: 350px;"><canvas id="monthlyChart"></canvas></div></div>
+            </section>
+
+            <section class="page-content" id="settings-page">
+                <div class="page-header"><div class="header-start"><button class="native-back-btn" onclick="window.history.back()"><i class="fas fa-arrow-right"></i></button><h1>تنظیمات</h1></div><button id="header-theme-toggle" class="header-theme-toggle-btn"><span class="theme-icon-wrapper"><i class="fas fa-moon"></i><i class="fas fa-sun"></i></span></button></div>
+                
+                <div class="card">
+                    <h2 style="margin-top:0; border: none; padding: 0;">ظاهر برنامه</h2>
                     <div class="theme-selector" id="theme-selector">
                         <div><input type="radio" id="theme-light" name="theme" value="theme-light"><label for="theme-light"><span class="theme-preview preview-light"><i class="fas fa-sun"></i></span><span>روشن</span></label></div>
                         <div><input type="radio" id="theme-dark" name="theme" value="theme-dark"><label for="theme-dark"><span class="theme-preview preview-dark"><i class="fas fa-moon"></i></span><span>تاریک</span></label></div>
@@ -413,35 +463,103 @@
                     </div>
                 </div>
                 
-                <div class="card"><h2 style="margin-top:0;">راهنمای برنامه</h2><p style="margin-bottom: 24px;">برای آشنایی با بخش‌های مختلف برنامه، می‌توانید راهنمای سریع را مجدداً مشاهده کنید.</p><button class="btn btn-info" id="start-tour-btn" style="width: auto;"><i class="fas fa-play" style="margin-left: 8px;"></i>شروع راهنمای سریع</button></div>
                 <div class="card">
-                    <h2 style="margin-top:0;">پشتیبان‌گیری و خروجی</h2>
-                    <p style="margin-bottom: 24px;">خروجی اکسل برای چاپ و گزارش‌دهی، و فایل پشتیبان برای بازگردانی اطلاعات در دستگاه دیگر.</p>
-                    <div class="backup-section" style="display: flex; gap: 16px; flex-wrap: wrap;">
-                        <button class="btn btn-success" id="exportExcelBtn" style="width: auto;"><i class="fas fa-file-excel"></i> خروجی اکسل</button>
-                        <button class="btn btn-secondary" id="downloadBackupBtn" style="width: auto;"><i class="fas fa-download"></i> دانلود فایل پشتیبان</button>
-                        <label for="uploadBackup" class="btn btn-light" style="width: auto; margin-bottom: 0;"><i class="fas fa-upload"></i> بازیابی از فایل</label>
+                    <h2 style="margin-top:0;">پشتیبان‌گیری و امنیت</h2>
+                    <div class="switch-container" style="border-bottom: 1px solid var(--border-color); padding-bottom: 16px; margin-bottom: 16px;">
+                        <div style="display:flex; flex-direction:column;">
+                            <span style="font-weight: 600; font-size: 15px;">پشتیبان‌گیری هوشمند</span>
+                            <span style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">دانلود خودکار فایل پس از تغییرات</span>
+                        </div>
+                        <label class="switch">
+                            <input type="checkbox" id="autoBackupToggle">
+                            <span class="slider round"></span>
+                        </label>
+                    </div>
+
+                    <div class="backup-grid">
+                        <button class="action-card-btn download-btn" id="downloadBackupBtn">
+                            <i class="fas fa-cloud-download-alt"></i>
+                            <span class="btn-title">دانلود فایل</span>
+                            <span class="btn-desc">ذخیره اطلاعات روی گوشی</span>
+                        </button>
+
+                        <label for="uploadBackup" class="action-card-btn restore-btn">
+                            <i class="fas fa-history"></i>
+                            <span class="btn-title">بازیابی اطلاعات</span>
+                            <span class="btn-desc">بازگردانی از فایل قبلی</span>
+                        </label>
                         <input type="file" id="uploadBackup" accept=".json" style="display: none;">
+
+                        <button class="action-card-btn excel-btn" id="exportExcelBtn">
+                            <i class="fas fa-file-excel"></i>
+                            <div class="text-wrapper">
+                                <span class="btn-title">خروجی اکسل (Excel)</span>
+                                <span class="btn-desc">جهت چاپ و گزارش‌دهی رسمی</span>
+                            </div>
+                        </button>
                     </div>
                 </div>
-                <div class="card"><h2 style="margin-top:0;">ایجاد گزارش سفارشی</h2><div class="custom-report-form" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; align-items: end;"><div class="form-group"><label for="reportStartDate">از تاریخ</label><input type="text" inputmode="numeric" id="reportStartDate" placeholder="مثال: 1403/01/01"></div><div class="form-group"><label for="reportEndDate">تا تاریخ</label><input type="text" inputmode="numeric" id="reportEndDate" placeholder="مثال: 1403/01/31"></div><button class="btn btn-light" id="generateCustomReportBtn">ایجاد پیش‌نمایش گزارش</button></div></div>
-                <div class="card"><div class="section-header collapsible-header"><div class="section-title"><i class="fas fa-chevron-down toggle-icon"></i>کارهای بایگانی‌شده</div><div class="section-count" id="archivedWorksCount">0 مورد</div></div><div class="archive-list collapsible-content" id="archivedWorksList"></div></div>
-                <div class="card"><div class="section-header collapsible-header"><div class="section-title"><i class="fas fa-chevron-down toggle-icon"></i>دریافتی‌های بایگانی‌شده</div><div class="section-count" id="archivedPaymentsCount">0 مورد</div></div><div class="archive-list collapsible-content" id="archivedPaymentsList"></div></div>
-            </section>
-            
-            <section class="page-content" id="reports-page"><div class="page-back-button-container" data-page-back-btn></div><div class="page-header"><h1>گزارش‌ها و نمودارها</h1><button id="header-theme-toggle" class="header-theme-toggle-btn"><span class="theme-icon-wrapper"><i class="fas fa-moon"></i><i class="fas fa-sun"></i></span></button></div><div class="card"><h2 style="margin-top: 0;">نمودار درآمد ماهانه</h2><div style="height: 350px;"><canvas id="monthlyChart"></canvas></div></div>
-            <!-- کارت جدید تاریخچه اهداف -->
-            <div class="card" id="goals-history-card">
-                <div class="section-header collapsible-header">
-                    <div class="section-title"><i class="fas fa-chevron-down toggle-icon"></i>تاریخچه اهداف مالی (۶ ماه اخیر)</div>
+
+                <div class="card">
+                    <h2 style="margin-top:0;">درباره برنامه</h2>
+                    <button class="btn btn-info" id="start-tour-btn" style="width: 100%;"><i class="fas fa-question-circle" style="margin-left: 8px;"></i>آموزش استفاده از برنامه</button>
+                    <p style="text-align: center; margin-top: 16px; font-size: 12px; color: var(--text-secondary);">نسخه 1.2.0 - حساب‌یار فریلنسر</p>
                 </div>
-                <div class="collapsible-content" id="goals-history-content">
-                    <div class="goal-history-list" id="goals-history-list"></div>
-                </div>
-            </div>
             </section>
 
-            <section class="page-content" id="more-page"><div class="page-header"><h1>بیشتر</h1><button id="header-theme-toggle" class="header-theme-toggle-btn"><span class="theme-icon-wrapper"><i class="fas fa-moon"></i><i class="fas fa-sun"></i></span></button></div><div class="more-menu-list"><a href="#" class="more-menu-item" data-page-link="employers-page"><i class="icon fas fa-users"></i><span class="text">کارفرمایان</span><i class="chevron fas fa-chevron-left"></i></a><a href="#" class="more-menu-item" data-page-link="payments-page"><i class="icon fas fa-hand-holding-dollar"></i><span class="text">لیست دریافتی‌ها</span><i class="chevron fas fa-chevron-left"></i></a><a href="#" class="more-menu-item" data-page-link="expenses-page"><i class="icon fas fa-receipt"></i><span class="text">لیست هزینه‌ها</span><i class="chevron fas fa-chevron-left"></i></a><a href="#" class="more-menu-item" data-page-link="settings-page"><i class="icon fas fa-cog"></i><span class="text">تنظیمات</span><i class="chevron fas fa-chevron-left"></i></a></div></section>
+            <section class="page-content" id="archive-page">
+                <div class="page-header">
+                    <div class="header-start">
+                        <button class="native-back-btn" onclick="window.history.back()">
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                        <h1>سطل زباله و آرشیو</h1>
+                    </div>
+                    <button id="header-theme-toggle" class="header-theme-toggle-btn">
+                        <span class="theme-icon-wrapper"><i class="fas fa-moon"></i><i class="fas fa-sun"></i></span>
+                    </button>
+                </div>
+
+                <div style="padding: 0 4px; margin-bottom: 20px;">
+                    <p style="font-size: 14px; color: var(--text-secondary); line-height: 1.6;">
+                        آیتم‌هایی که تسویه شده‌اند یا دستی حذف شده‌اند در اینجا نگهداری می‌شوند.
+                    </p>
+                </div>
+
+                <div class="card">
+                    <div class="section-header collapsible-header active" style="margin-bottom: 0;">
+                        <div class="section-title">
+                            <i class="fas fa-briefcase" style="margin-left:8px; color: var(--primary-color);"></i>
+                            کارهای بایگانی‌شده
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="section-count" id="archivedWorksCount">0</div>
+                    </div>
+                    <div class="archive-list collapsible-content open" id="archivedWorksList"></div>
+                </div>
+
+                <div class="card">
+                    <div class="section-header collapsible-header active" style="margin-bottom: 0;">
+                        <div class="section-title">
+                            <i class="fas fa-hand-holding-dollar" style="margin-left:8px; color: var(--success-color);"></i>
+                            دریافتی‌های بایگانی‌شده
+                            <i class="fas fa-chevron-down toggle-icon"></i>
+                        </div>
+                        <div class="section-count" id="archivedPaymentsCount">0</div>
+                    </div>
+                    <div class="archive-list collapsible-content open" id="archivedPaymentsList"></div>
+                </div>
+            </section>
+
+            <section class="page-content" id="more-page"><div class="page-header"><div class="header-start"><button class="native-back-btn" onclick="window.history.back()"><i class="fas fa-arrow-right"></i></button><h1>بیشتر</h1></div><button id="header-theme-toggle" class="header-theme-toggle-btn"><span class="theme-icon-wrapper"><i class="fas fa-moon"></i><i class="fas fa-sun"></i></span></button></div>
+            <div class="more-menu-list">
+                <a href="#" class="more-menu-item" data-page-link="archive-page"><i class="icon fas fa-archive" style="color: var(--warning-color);"></i><span class="text">سطل زباله و آرشیو</span><i class="chevron fas fa-chevron-left"></i></a>
+                <a href="#" class="more-menu-item" data-page-link="employers-page"><i class="icon fas fa-users"></i><span class="text">مدیریت کارفرمایان</span><i class="chevron fas fa-chevron-left"></i></a>
+                <a href="#" class="more-menu-item" data-page-link="payments-page"><i class="icon fas fa-hand-holding-dollar"></i><span class="text">لیست دریافتی‌ها</span><i class="chevron fas fa-chevron-left"></i></a>
+                <a href="#" class="more-menu-item" data-page-link="expenses-page"><i class="icon fas fa-receipt"></i><span class="text">لیست هزینه‌ها</span><i class="chevron fas fa-chevron-left"></i></a>
+                <a href="#" class="more-menu-item" data-page-link="settings-page"><i class="icon fas fa-cog"></i><span class="text">تنظیمات</span><i class="chevron fas fa-chevron-left"></i></a>
+            </div>
+            </section>
         </main>
     </div>
     
@@ -451,13 +569,12 @@
     <script>
     (function() {
         const ITEM_TYPES = { WORK: 'work', PAYMENT: 'payment', EXPENSE: 'expense', };
+        const MAIN_TABS = ['dashboard-page', 'works-page', 'reports-page', 'more-page', 'expenses-page', 'payments-page'];
         let activePageId = 'dashboard-page';
-        let previousPageId = null;
 
         const DOM = { 
             body: document.body, notification: document.getElementById('notification'), navBtns: document.querySelectorAll('.sidebar .nav-btn'), mobileNavBtns: document.querySelectorAll('.mobile-nav .nav-btn'), mobileFabCenter: document.getElementById('mobile-fab-center'), headerThemeToggles: document.querySelectorAll('.header-theme-toggle-btn'), pageContents: document.querySelectorAll('.page-content'), pageBackButtonContainers: document.querySelectorAll('[data-page-back-btn]'), themeSelector: document.getElementById('theme-selector'), startTourBtn: document.getElementById('start-tour-btn'), dashboardBalance: document.getElementById('dashboard-balance'), dashboardBalanceLabel: document.getElementById('dashboard-balance-label'), dashboardMonthlyIncome: document.getElementById('dashboard-monthly-income'), dashboardMonthlyExpenses: document.getElementById('dashboard-monthly-expenses'), dashboardTopDebtors: document.getElementById('dashboard-top-debtors'), dashboardRecentUnsettled: document.getElementById('dashboard-recent-unsettled'), incomeExpenseChart: document.getElementById('incomeExpenseChart'), dashboardDebtorsContent: document.getElementById('dashboard-debtors-content'), dashboardUnsettledContent: document.getElementById('dashboard-unsettled-content'), setGoalsBtn: document.getElementById('set-goals-btn'), incomeGoalValue: document.getElementById('income-goal-value'), incomeGoalProgress: document.getElementById('income-goal-progress'), incomeGoalCurrent: document.getElementById('income-goal-current'), expenseGoalValue: document.getElementById('expense-goal-value'), expenseGoalProgress: document.getElementById('expense-goal-progress'), expenseGoalCurrent: document.getElementById('expense-goal-current'), employerListView: document.getElementById('employerListView'), employerDetailView: document.getElementById('employerDetailView'), employersListContainer: document.getElementById('employersListContainer'), employerSearchInput: document.getElementById('employerSearchInput'), backToEmployersListBtn: document.getElementById('backToEmployersList'), employerDetailName: document.getElementById('employerDetailName'), editEmployerNameBtn: document.getElementById('editEmployerNameBtn'), employerDetailTotalWork: document.getElementById('employerDetailTotalWork'), employerDetailBalance: document.getElementById('employerDetailBalance'), employerDetailBalanceLabel: document.getElementById('employerDetailBalanceLabel'), employerDetailTotalPaid: document.getElementById('employerDetailTotalPaid'), employerDetailUnsettledWorks: document.getElementById('employerDetailUnsettledWorks'), employerDetailRecentPayments: document.getElementById('employerDetailRecentPayments'), worksList: document.getElementById('worksList'), worksPagination: document.getElementById('worksPagination'), worksCount: document.getElementById('worksCount'), workSearchInput: document.getElementById('workSearchInput'), workEmployerFilter: document.getElementById('workEmployerFilter'), paymentsList: document.getElementById('paymentsList'), paymentsCount: document.getElementById('paymentsCount'), paymentSearchInput: document.getElementById('paymentSearchInput'), monthlyChart: document.getElementById('monthlyChart'), expensesList: document.getElementById('expensesList'), expensesCount: document.getElementById('expensesCount'), expenseSearchInput: document.getElementById('expenseSearchInput'), expenseCategoryChart: document.getElementById('expenseCategoryChart'), reportStartDateInput: document.getElementById('reportStartDate'), reportEndDateInput: document.getElementById('reportEndDate'), generateCustomReportBtn: document.getElementById('generateCustomReportBtn'), archivedWorksList: document.getElementById('archivedWorksList'), archivedWorksCount: document.getElementById('archivedWorksCount'), archivedPaymentsList: document.getElementById('archivedPaymentsList'), archivedPaymentsCount: document.getElementById('archivedPaymentsCount'), downloadBackupBtn: document.getElementById('downloadBackupBtn'), uploadBackupInput: document.getElementById('uploadBackup'), reportModal: document.getElementById('report-modal'), reportModalBody: document.getElementById('report-modal-body'), formModal: document.getElementById('form-modal'), formModalTitle: document.getElementById('form-modal-title'), formModalBody: document.getElementById('form-modal-body'), confirmModal: document.getElementById('confirm-modal'), confirmModalTitle: document.getElementById('confirm-modal-title'), confirmModalText: document.getElementById('confirm-modal-text'), confirmModalOk: document.getElementById('confirm-modal-ok'), confirmModalCancel: document.getElementById('confirm-modal-cancel'), morePageLinks: document.querySelectorAll('.more-menu-item[data-page-link]'),
-            exportExcelBtn: document.getElementById('exportExcelBtn'),
-            goalsHistoryContent: document.getElementById('goals-history-content'), goalsHistoryList: document.getElementById('goals-history-list')
+            exportExcelBtn: document.getElementById('exportExcelBtn'), autoBackupToggle: document.getElementById('autoBackupToggle')
         };
         const expenseCategories = ['عمومی', 'حمل و نقل', 'اینترنت و ارتباطات', 'نرم‌افزار و ابزار', 'مواد اولیه', 'مالیات', 'متفرقه'];
         const emptyStateWorksEl = `<div class="empty-state"><i class="fas fa-clipboard-list"></i><p>هنوز کاری اضافه نکرده‌اید</p></div>`;
@@ -466,37 +583,38 @@
         const emptyStateArchivedWorksEl = `<div class="empty-state"><i class="fas fa-archive"></i><p>هیچ کاری بایگانی نشده است</p></div>`;
         const emptyStateArchivedPaymentsEl = `<div class="empty-state"><i class="fas fa-archive"></i><p>هیچ دریافتی بایگانی نشده است</p></div>`;
         const emptyStateEmployersEl = `<div class="empty-state" style="grid-column: 1 / -1;"><i class="fas fa-users"></i><p>هنوز کارفرمایی ثبت نشده است.</p></div>`;
-        let state = { works: [], payments: [], expenses: [], archive: [], goals: {}, collapsibleStates: {}, editingItemId: null, editingItemType: null, pagination: { works: { currentPage: 1, itemsPerPage: 10 } } };
-        let myChart = null, incomeExpenseChart = null, expenseChart = null, undoTimeout = null;
+        let state = { works: [], payments: [], expenses: [], archive: [], goals: {}, collapsibleStates: {}, editingItemId: null, editingItemType: null, pagination: { works: { currentPage: 1, itemsPerPage: 10 } }, autoBackup: false };
+        let myChart = null, incomeExpenseChart = null, expenseChart = null, undoTimeout = null, autoBackupTimeout = null;
         let lastDeleted = { item: null, type: null, sourceArray: null, index: -1 };
         const monthNames = ["فروردین", "اردیبهشت", "خرداد", "تیر", "مرداد", "شهریور", "مهر", "آبان", "آذر", "دی", "بهمن", "اسفند"];
         const formatNumber = (number) => new Intl.NumberFormat('fa-IR').format(number);
 
         const generateUniqueId = () => Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
         
-        // --- Native Feel: Date Mask & Button Delay ---
+        const vibrate = (pattern = 15) => { if ("vibrate" in navigator) { navigator.vibrate(pattern); } };
 
-        // 1. تابع ماسک تاریخ هوشمند
         function setupDateInputMask(inputElement) {
             if (!inputElement) return;
-            
             inputElement.addEventListener('input', function(e) {
-                let v = e.target.value.replace(/\D/g, '');
-                if (v.length > 8) v = v.slice(0, 8);
-
-                const startsWithDay = /^[023]/.test(v) || /^1[5-9]/.test(v);
-                
-                if (startsWithDay) {
-                    if (v.length >= 3) v = v.slice(0, 2) + '/' + v.slice(2);
-                    if (v.length >= 6) v = v.slice(0, 5) + '/' + v.slice(5);
-                } else {
-                    if (v.length >= 5) v = v.slice(0, 4) + '/' + v.slice(4);
-                    if (v.length >= 8) v = v.slice(0, 7) + '/' + v.slice(7);
+                if (e.inputType === 'deleteContentBackward') return;
+                let v = e.target.value;
+                v = v.replace(/[^\d\/]/g, ''); 
+                const digits = v.replace(/\D/g, ''); 
+                if (digits.length === 2 && !v.includes('/')) {
+                    const num = parseInt(digits);
+                    if ((num >= 1 && num <= 9) || (num >= 15 && num <= 31)) {
+                        v = digits + '/';
+                    }
                 }
-                
+                if (digits.length === 4 && !v.includes('/')) {
+                    const num = parseInt(digits);
+                    if (num >= 1300) {
+                        v = digits + '/';
+                    }
+                }
+                if (v.length > 10) v = v.slice(0, 10);
                 e.target.value = v;
             });
-
             inputElement.addEventListener('keydown', function(e) {
                 if (e.key === 'Backspace' && e.target.value.endsWith('/')) {
                     e.preventDefault();
@@ -505,16 +623,14 @@
             });
         }
 
-        // 2. تابع شبیه‌ساز پردازش نیتیو
         function runWithNativeDelay(btnElement, actionCallback) {
             if (!btnElement) return;
+            vibrate(20);
             const originalContent = btnElement.innerHTML;
             const originalWidth = btnElement.offsetWidth;
-            
             btnElement.style.width = `${originalWidth}px`;
             btnElement.disabled = true;
             btnElement.innerHTML = `<i class="fas fa-circle-notch fa-spin-fast"></i>`;
-            
             setTimeout(() => {
                 actionCallback();
                 if(document.body.contains(btnElement)) {
@@ -522,34 +638,29 @@
                     btnElement.disabled = false;
                     btnElement.style.width = '';
                 }
+                vibrate([10, 50, 10]); 
             }, 600); 
         }
 
-        /* --- Excel Export Logic --- */
         function exportToCSV() {
             const works = state.works;
             const payments = state.payments;
             const expenses = state.expenses;
-
-            let csvContent = "\uFEFF"; // BOM for utf-8
+            let csvContent = "\uFEFF"; 
             csvContent += "نوع,عنوان/کارفرما,توضیحات/دسته,مبلغ (تومان),تاریخ,وضعیت\n";
-
             works.forEach(w => {
                 const date = toJalali(w.dateAdded);
                 const status = w.paidAmount >= w.total ? "تسویه شده" : "بدهکار";
                 csvContent += `کار,${w.employer},${w.type},${w.total},${date},${status}\n`;
             });
-
             payments.forEach(p => {
                 const date = p.jalaliDate || toJalali(p.date);
                 csvContent += `دریافتی,${p.employer},${p.description || '-'},${p.amount},${date},-\n`;
             });
-
             expenses.forEach(e => {
                 const date = e.jalaliDate || toJalali(e.date);
                 csvContent += `هزینه,${e.title},${e.category},${e.amount},${date},-\n`;
             });
-
             const encodedUri = encodeURI("data:text/csv;charset=utf-8," + csvContent);
             const link = document.createElement("a");
             link.setAttribute("href", encodedUri);
@@ -561,10 +672,41 @@
             showNotification('فایل اکسل با موفقیت دانلود شد.', 'success');
         }
 
-        /* --- Original Functions --- */
-        function showNotification(message, type = 'info', action = null) { clearTimeout(undoTimeout); let actionButtonHTML = ''; if (action && action.text && typeof action.onClick === 'function') { actionButtonHTML = `<button class="btn btn-light" style="margin-right: 20px; padding: 5px 10px; width: auto; font-size: 14px;" id="notification-action-btn">${action.text}</button>`; } DOM.notification.innerHTML = `<span>${message}</span>${actionButtonHTML}`; DOM.notification.className = `notification ${type}`; DOM.notification.style.display = 'flex'; if (actionButtonHTML) { document.getElementById('notification-action-btn').addEventListener('click', action.onClick); } const timeoutDuration = action ? 7000 : 4000; undoTimeout = setTimeout(() => { DOM.notification.style.display = 'none'; if (action && lastDeleted.item) finalizeDelete(); }, timeoutDuration); }
+        function showNotification(message, type = 'info', action = null) { 
+            clearTimeout(undoTimeout); 
+            DOM.notification.innerHTML = `<span>${message}</span>`;
+            DOM.notification.className = `notification show ${type}`;
+            DOM.notification.style.display = 'flex'; 
+            if (action) {
+                 DOM.notification.innerHTML = `<span>${message}</span><button style="background:transparent; border:1px solid white; color:white; padding:2px 8px; border-radius:4px; margin-right:10px;" id="notif-action">${action.text}</button>`;
+                 document.getElementById('notif-action').addEventListener('click', action.onClick);
+            }
+            const timeoutDuration = action ? 5000 : 3000; 
+            undoTimeout = setTimeout(() => { 
+                DOM.notification.classList.remove('show');
+                setTimeout(() => DOM.notification.style.display = 'none', 300); 
+                if (action && lastDeleted.item) finalizeDelete(); 
+            }, timeoutDuration); 
+        }
+
         const saveToLocalStorage = () => localStorage.setItem('data', JSON.stringify(state));
-        function loadFromLocalStorage() { const savedData = localStorage.getItem('data'); if (savedData) { const loadedState = JSON.parse(savedData); state = { ...state, ...loadedState }; state.editingItemId = null; state.editingItemType = null; state.expenses = state.expenses || []; state.archive = state.archive || []; state.goals = loadedState.goals || {}; state.collapsibleStates = loadedState.collapsibleStates || {}; state.pagination = loadedState.pagination || { works: { currentPage: 1, itemsPerPage: 10 } }; state.works.forEach(work => { if (work.paidAmount === undefined) work.paidAmount = 0; if (work.dateStarted === undefined) work.dateStarted = null; if (work.dateFinished === undefined) work.dateFinished = null; }); state.expenses.forEach(exp => { if (!exp.category) exp.category = 'عمومی'; }); } }
+        function loadFromLocalStorage() { 
+            const savedData = localStorage.getItem('data'); 
+            if (savedData) { 
+                const loadedState = JSON.parse(savedData); 
+                state = { ...state, ...loadedState }; 
+                state.editingItemId = null; 
+                state.editingItemType = null; 
+                state.expenses = state.expenses || []; 
+                state.archive = state.archive || []; 
+                state.goals = loadedState.goals || {}; 
+                state.collapsibleStates = loadedState.collapsibleStates || {}; 
+                state.pagination = loadedState.pagination || { works: { currentPage: 1, itemsPerPage: 10 } }; 
+                if (state.autoBackup === undefined) state.autoBackup = false; 
+                state.works.forEach(work => { if (work.paidAmount === undefined) work.paidAmount = 0; if (work.dateStarted === undefined) work.dateStarted = null; if (work.dateFinished === undefined) work.dateFinished = null; }); 
+                state.expenses.forEach(exp => { if (!exp.category) exp.category = 'عمومی'; }); 
+            } 
+        }
         function addOrUpdateCredit(employerName, amount, reasonText = 'اعتبار') { if (amount <= 0) return; let creditWork = state.works.find(w => w.employer === employerName && w.isCredit); if (creditWork) { creditWork.total -= amount; } else { state.works.unshift({ id: generateUniqueId(), employer: employerName, type: reasonText, isCredit: true, total: -amount, paidAmount: 0, count: 1, price: -amount, dateAdded: new Date().toISOString() }); } showNotification(`مبلغ ${formatNumber(amount)} تومان به عنوان اعتبار برای "${employerName}" ثبت شد.`, 'success'); }
         function toJalali(date) { if (!date) return ''; return moment(new Date(date)).format('jYYYY/jMM/jDD'); }
         function parseFlexibleJalali(dateStr) { if (!dateStr || typeof dateStr !== 'string') return null; const parts = dateStr.split(/[\/-]/); if (parts.length !== 3) return null; const yearIndex = parts.findIndex(p => p.length === 4); const yearFirstFormats = ['jYYYY/jM/jD', 'jYYYY/jMM/jD', 'jYYYY/jM/jDD', 'jYYYY/jMM/jDD']; const dayFirstFormats = ['jD/jM/jYYYY', 'jD/jMM/jYYYY', 'jDD/jM/jYYYY', 'jDD/jMM/jYYYY']; let m; if (yearIndex === 0) { m = moment(dateStr, yearFirstFormats, 'fa', true); } else if (yearIndex === 2) { m = moment(dateStr, dayFirstFormats, 'fa', true); } else { return null; } return m.isValid() ? m : null; }
@@ -579,54 +721,57 @@
                     resolve();
                     return;
                 }
-
                 if (!isBackAction) { 
-                    previousPageId = activePageId; 
-                    // فقط اگر صفحه تکراری نیست به تاریخچه اضافه کن
-                    if(history.state?.pageId !== pageId) {
+                    vibrate(10); 
+                    const isSourceMain = MAIN_TABS.includes(activePageId);
+                    const isTargetMain = MAIN_TABS.includes(pageId);
+
+                    if (isSourceMain && isTargetMain) {
+                        if (pageId === 'dashboard-page') {
+                             history.replaceState({ pageId: pageId }, null, `#${pageId}`);
+                        } else {
+                             history.replaceState({ pageId: pageId }, null, `#${pageId}`);
+                        }
+                    } else {
                         history.pushState({ pageId: pageId }, null, `#${pageId}`);
                     }
                 }
-
                 activePageId = pageId;
-
                 [...DOM.mobileNavBtns].filter(b => b.dataset.page).forEach(btn => btn.classList.remove('active'));
                 const targetMobileBtn = document.querySelector(`.mobile-nav .nav-btn[data-page="${pageId}"]`);
                 if (targetMobileBtn) targetMobileBtn.classList.add('active');
-
                 DOM.pageContents.forEach(content => content.classList.remove('active'));
                 const targetPage = document.getElementById(pageId);
                 if (targetPage) {
                     targetPage.classList.add('active');
+                    const backBtn = targetPage.querySelector('.native-back-btn');
+                    if (backBtn) {
+                        if (MAIN_TABS.includes(pageId)) backBtn.style.display = 'none';
+                        else backBtn.style.display = 'flex';
+                    }
                 }
                 
+                if (pageId === 'employers-page') {
+                    DOM.employerListView.style.display = 'block';
+                    DOM.employerDetailView.style.display = 'none';
+                }
+
                 DOM.navBtns.forEach(btn => btn.classList.toggle('active', btn.dataset.page === pageId));
-
-                DOM.pageBackButtonContainers.forEach(container => {
-                    if (container.closest('.page-content').id === pageId && previousPageId === 'more-page' && pageId !== 'more-page') {
-                        // دکمه بازگشت در صفحه داخلی "بیشتر"
-                        container.innerHTML = `<button class="page-back-button" onclick="history.back()"><i class="fas fa-arrow-right"></i> بازگشت به منو</button>`;
-                        container.style.display = 'block';
-                    } else {
-                        container.innerHTML = '';
-                        container.style.display = 'none';
-                    }
-                });
-
                 updateAll();
-
-                setTimeout(() => {
-                    resolve();
-                }, 550);
+                setTimeout(() => { resolve(); }, 300); 
             });
         }
 
         function populateEmployerDropdown(selectElement) { if (!selectElement) return; const employers = [...new Set(state.works.filter(w => !w.isCredit).map(w => w.employer))]; selectElement.innerHTML = ''; if (employers.length === 0) { selectElement.innerHTML = '<option value="">ابتدا یک کار برای یک کارفرما ثبت کنید</option>'; selectElement.disabled = true; } else { selectElement.disabled = false; employers.sort().forEach(emp => selectElement.add(new Option(emp, emp))); } }
-        function showFormInModal(title, templateId, setupFunction) { DOM.formModalTitle.textContent = title; const template = document.getElementById(templateId); if (!template) return console.error(`Template with id "${templateId}" not found.`); const formContent = template.content.cloneNode(true); DOM.formModalBody.innerHTML = ''; DOM.formModalBody.appendChild(formContent); if (setupFunction) setupFunction(DOM.formModalBody); DOM.formModal.style.display = 'flex'; document.body.style.overflow = 'hidden'; }
+        function showFormInModal(title, templateId, setupFunction) { 
+            history.pushState({ modal: true }, null, "");
+            DOM.formModalTitle.textContent = title; const template = document.getElementById(templateId); if (!template) return console.error(`Template with id "${templateId}" not found.`); const formContent = template.content.cloneNode(true); DOM.formModalBody.innerHTML = ''; DOM.formModalBody.appendChild(formContent); if (setupFunction) setupFunction(DOM.formModalBody); DOM.formModal.style.display = 'flex'; document.body.style.overflow = 'hidden'; vibrate(10); 
+        }
         function showConfirmModal(title, text, onConfirm) { 
             DOM.confirmModalTitle.textContent = title; 
             DOM.confirmModalText.textContent = text; 
             DOM.confirmModal.style.display = 'flex'; 
+            vibrate(30); 
             DOM.confirmModalOk.onclick = () => { 
                 runWithNativeDelay(DOM.confirmModalOk, () => {
                     onConfirm(); 
@@ -647,11 +792,16 @@
             populateWorkEmployerFilter(); 
             updateEmployerDatalist(); 
             updateEmployersList();
-            if (activePageId === 'reports-page') {
-                updateMonthlyChart();
-                updateGoalHistory();
-            }
+            if (activePageId === 'reports-page') updateMonthlyChart();
             if (activePageId === 'expenses-page') updateExpenseChart();
+            DOM.autoBackupToggle.checked = state.autoBackup;
+
+            if (state.autoBackup) {
+                clearTimeout(autoBackupTimeout);
+                autoBackupTimeout = setTimeout(() => {
+                    downloadBackup(true); 
+                }, 1500); 
+            }
         }
 
         function updateCounts() { DOM.worksCount.textContent = `${state.works.length} مورد`; DOM.paymentsCount.textContent = `${state.payments.length} مورد`; DOM.expensesCount.textContent = `${state.expenses.length} مورد`; DOM.archivedWorksCount.textContent = `${state.archive.filter(item => item.itemType === ITEM_TYPES.WORK).length} مورد`; DOM.archivedPaymentsCount.textContent = `${state.archive.filter(item => item.itemType === ITEM_TYPES.PAYMENT).length} مورد`; }
@@ -663,10 +813,8 @@
                 DOM.body.classList.add(themeName);
             }
             localStorage.setItem('theme', themeName);
-
             const radioToCheck = document.getElementById(themeName);
             if(radioToCheck) radioToCheck.checked = true;
-
             setTimeout(() => {
                 if (myChart) updateMonthlyChart();
                 if (incomeExpenseChart) updateIncomeExpenseChart();
@@ -674,210 +822,79 @@
             }, 50);
         }
 
-        function updateDashboard() { 
-            // 1. محاسبه سود خالص (مانده)
-            const totalWorkValue = state.works.reduce((sum, work) => sum + work.total, 0);
-            const totalExpenses = state.expenses.reduce((sum, e) => sum + e.amount, 0);
-            const netBalance = totalWorkValue - totalExpenses; 
-            DOM.dashboardBalance.textContent = `${formatNumber(Math.abs(netBalance))} تومان`;
-            DOM.dashboardBalance.className = `value ${netBalance > 0 ? 'negative' : (netBalance < 0 ? 'positive' : '')}`;
-            DOM.dashboardBalanceLabel.textContent = netBalance > 0 ? 'تراز منفی (بدهی)' : 'تراز مثبت (سود)';
-
-            // 2. محاسبه درآمد ماه (بر اساس کار)
-            const allWorks = [...state.works, ...state.archive.filter(i => i.itemType === 'work')];
-            const currentMonthIncome = allWorks.filter(w => {
-                if (w.isCredit) return false;
-                const wDate = getJalaliYearAndMonth(w.dateAdded);
-                return wDate.year === moment().jYear() && wDate.month === moment().jMonth();
-            }).reduce((sum, w) => sum + w.total, 0);
-            DOM.dashboardMonthlyIncome.textContent = `${formatNumber(currentMonthIncome)} تومان`;
-
-            // 3. هزینه ماه
+        function updateDashboard() { const totalWorkValue = state.works.reduce((sum, work) => sum + work.total, 0); const totalExpenses = state.expenses.reduce((sum, e) => sum + e.amount, 0); const netBalance = totalWorkValue - totalExpenses; DOM.dashboardBalance.textContent = `${formatNumber(Math.abs(netBalance))} تومان`; DOM.dashboardBalance.className = `value ${netBalance > 0 ? 'negative' : (netBalance < 0 ? 'positive' : '')}`; DOM.dashboardBalanceLabel.textContent = netBalance > 0 ? 'کل بدهی شما' : (netBalance < 0 ? 'کل بستانکاری شما' : 'مانده کل حساب'); const currentMonthPayments = state.payments.filter(p => getJalaliYearAndMonth(p.date).year === moment().jYear() && getJalaliYearAndMonth(p.date).month === moment().jMonth()).reduce((sum, p) => sum + p.amount, 0); DOM.dashboardMonthlyIncome.textContent = `${formatNumber(currentMonthPayments)} تومان`; const currentMonthExpenses = state.expenses.filter(e => getJalaliYearAndMonth(e.date).year === moment().jYear() && getJalaliYearAndMonth(e.date).month === moment().jMonth()).reduce((sum, e) => sum + e.amount, 0); DOM.dashboardMonthlyExpenses.textContent = `${formatNumber(currentMonthExpenses)} تومان`; const employerTotals = {}; state.works.forEach(work => { employerTotals[work.employer] = (employerTotals[work.employer] || 0) + work.total; }); const topDebtors = Object.entries(employerTotals).map(([employer, balance]) => ({ employer, balance })).filter(item => item.balance > 0).sort((a, b) => b.balance - a.balance).slice(0, 5); DOM.dashboardTopDebtors.innerHTML = topDebtors.length === 0 ? '<p style="text-align: center; color: var(--text-secondary); padding: 20px 0;">هیچ کارفرمای بدهکاری وجود ندارد.</p>' : topDebtors.map(item => `<div class="list-item"><span class="item-name">${item.employer}</span><span class="item-value expense-amount">${formatNumber(item.balance)} ت</span></div>`).join(''); const recentUnsettled = state.works.filter(w => !w.isCredit && w.paidAmount < w.total).sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded)).slice(0, 5); DOM.dashboardRecentUnsettled.innerHTML = recentUnsettled.length === 0 ? '<p style="text-align: center; color: var(--text-secondary); padding: 20px 0;">همه کارها تسویه شده‌اند!</p>' : recentUnsettled.map(work => { const remaining = work.total - work.paidAmount; return `<div class="list-item"><div><div class="item-name">${work.employer} - ${work.type}</div><div class="item-meta">${toJalali(work.dateAdded)}</div></div><span class="item-value expense-amount">${formatNumber(remaining)} ت</span></div>`; }).join(''); adjustCollapsibleHeight(DOM.dashboardDebtorsContent); adjustCollapsibleHeight(DOM.dashboardUnsettledContent); updateIncomeExpenseChart(); updateGoalsDisplay(); }
+        function updateIncomeExpenseChart() { if(!DOM.incomeExpenseChart) return; const labels = []; const incomeData = []; const expenseData = []; const m = moment(); for (let i = 5; i >= 0; i--) { const targetMonth = m.clone().subtract(i, 'jMonths'); const year = targetMonth.jYear(); const month = targetMonth.jMonth(); labels.push(monthNames[month]); const monthlyIncome = state.payments.filter(p => { const pDate = getJalaliYearAndMonth(p.date); return pDate.year === year && pDate.month === month; }).reduce((sum, p) => sum + p.amount, 0); incomeData.push(monthlyIncome); const monthlyExpense = state.expenses.filter(e => { const eDate = getJalaliYearAndMonth(e.date); return eDate.year === year && eDate.month === month; }).reduce((sum, e) => sum + e.amount, 0); expenseData.push(monthlyExpense); } if (incomeExpenseChart) incomeExpenseChart.destroy(); const computedStyle = getComputedStyle(DOM.body); const gridColor = computedStyle.getPropertyValue('--border-color'); const textColor = computedStyle.getPropertyValue('--text-primary'); incomeExpenseChart = new Chart(DOM.incomeExpenseChart, { type: 'bar', data: { labels: labels, datasets: [ { label: 'درآمد', data: incomeData, backgroundColor: computedStyle.getPropertyValue('--success-color'), borderRadius: 5 }, { label: 'هزینه', data: expenseData, backgroundColor: computedStyle.getPropertyValue('--danger-color'), borderRadius: 5 } ] }, options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, grid: { color: gridColor }, ticks: { color: textColor } }, x: { grid: { display: false }, ticks: { color: textColor } } }, plugins: { legend: { position: 'top', labels: { font: { family: 'Vazirmatn, sans-serif' }, color: textColor } } } } }); }
+        
+        function updateGoalsDisplay() {
+            const currentYear = moment().jYear();
+            const currentMonth = moment().jMonth();
+            const currentMonthKey = `${currentYear}-${currentMonth}`; 
+            const monthlyGoals = state.goals[currentMonthKey];
+            const currentMonthIncome = state.payments.filter(p => {
+                const pDate = moment(p.date);
+                return pDate.jYear() === currentYear && pDate.jMonth() === currentMonth;
+            }).reduce((sum, p) => sum + p.amount, 0);
             const currentMonthExpenses = state.expenses.filter(e => {
-                const eDate = getJalaliYearAndMonth(e.date);
-                return eDate.year === moment().jYear() && eDate.month === moment().jMonth();
+                const eDate = moment(e.date);
+                return eDate.jYear() === currentYear && eDate.jMonth() === currentMonth;
             }).reduce((sum, e) => sum + e.amount, 0);
-            DOM.dashboardMonthlyExpenses.textContent = `${formatNumber(currentMonthExpenses)} تومان`;
 
-            // 4. بدهکاران
-            const employerTotals = {};
-            state.works.forEach(work => { employerTotals[work.employer] = (employerTotals[work.employer] || 0) + work.total; });
-            const topDebtors = Object.entries(employerTotals).map(([employer, _]) => {
-                const empWorks = state.works.filter(w => w.employer === employer);
-                const totalDebt = empWorks.reduce((sum, w) => sum + (w.total - w.paidAmount), 0);
-                return { employer, balance: totalDebt };
-            }).filter(item => item.balance > 0).sort((a, b) => b.balance - a.balance).slice(0, 5);
-            
-            DOM.dashboardTopDebtors.innerHTML = topDebtors.length === 0 ? 
-                '<p style="text-align: center; color: var(--text-secondary); padding: 20px 0;">هیچ کارفرمای بدهکاری وجود ندارد.</p>' : 
-                topDebtors.map(item => `<div class="list-item"><span class="item-name">${item.employer}</span><span class="item-value expense-amount">${formatNumber(item.balance)} ت</span></div>`).join('');
+            if (monthlyGoals && monthlyGoals.income > 0) {
+                DOM.incomeGoalValue.textContent = `${formatNumber(monthlyGoals.income)} تومان`;
+                const progress = Math.min((currentMonthIncome / monthlyGoals.income) * 100, 100);
+                DOM.incomeGoalProgress.style.width = `${progress}%`;
+            } else {
+                DOM.incomeGoalValue.textContent = 'تعیین نشده';
+                DOM.incomeGoalProgress.style.width = '0%';
+            }
+            DOM.incomeGoalCurrent.textContent = `${formatNumber(currentMonthIncome)} تومان`;
 
-            // 5. کارهای اخیر
-            const recentUnsettled = state.works.filter(w => !w.isCredit && w.paidAmount < w.total).sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded)).slice(0, 5);
-            DOM.dashboardRecentUnsettled.innerHTML = recentUnsettled.length === 0 ? 
-                '<p style="text-align: center; color: var(--text-secondary); padding: 20px 0;">همه کارها تسویه شده‌اند!</p>' : 
-                recentUnsettled.map(work => { 
-                    const remaining = work.total - work.paidAmount; 
-                    return `<div class="list-item"><div><div class="item-name">${work.employer} - ${work.type}</div><div class="item-meta">${toJalali(work.dateAdded)}</div></div><span class="item-value expense-amount">${formatNumber(remaining)} ت</span></div>`; 
-                }).join('');
-
-            adjustCollapsibleHeight(DOM.dashboardDebtorsContent);
-            adjustCollapsibleHeight(DOM.dashboardUnsettledContent);
-            updateIncomeExpenseChart();
-            updateGoalsDisplay();
-        }
-
-        function updateIncomeExpenseChart() { 
-            if(!DOM.incomeExpenseChart) return; 
-            const labels = []; 
-            const incomeData = []; 
-            const expenseData = []; 
-            const m = moment(); 
-            const allWorks = [...state.works, ...state.archive.filter(i => i.itemType === 'work')];
-
-            for (let i = 5; i >= 0; i--) { 
-                const targetMonth = m.clone().subtract(i, 'jMonths'); 
-                const year = targetMonth.jYear(); 
-                const month = targetMonth.jMonth(); 
-                labels.push(monthNames[month]); 
-                
-                const monthlyIncome = allWorks.filter(w => { 
-                    if(w.isCredit) return false;
-                    const wDate = getJalaliYearAndMonth(w.dateAdded); 
-                    return wDate.year === year && wDate.month === month; 
-                }).reduce((sum, w) => sum + w.total, 0); 
-                incomeData.push(monthlyIncome); 
-                
-                const monthlyExpense = state.expenses.filter(e => { 
-                    const eDate = getJalaliYearAndMonth(e.date); 
-                    return eDate.year === year && eDate.month === month; 
-                }).reduce((sum, e) => sum + e.amount, 0); 
-                expenseData.push(monthlyExpense); 
-            } 
-            
-            if (incomeExpenseChart) incomeExpenseChart.destroy(); 
-            const computedStyle = getComputedStyle(DOM.body); 
-            const gridColor = computedStyle.getPropertyValue('--border-color'); 
-            const textColor = computedStyle.getPropertyValue('--text-primary'); 
-            
-            incomeExpenseChart = new Chart(DOM.incomeExpenseChart, { 
-                type: 'bar', 
-                data: { 
-                    labels: labels, 
-                    datasets: [ 
-                        { label: 'درآمد (کارکرد)', data: incomeData, backgroundColor: computedStyle.getPropertyValue('--success-color'), borderRadius: 5 }, 
-                        { label: 'هزینه', data: expenseData, backgroundColor: computedStyle.getPropertyValue('--danger-color'), borderRadius: 5 } 
-                    ] 
-                }, 
-                options: { 
-                    responsive: true, 
-                    maintainAspectRatio: false, 
-                    scales: { 
-                        y: { beginAtZero: true, grid: { color: gridColor }, ticks: { color: textColor } }, 
-                        x: { grid: { display: false }, ticks: { color: textColor } } 
-                    }, 
-                    plugins: { legend: { position: 'top', labels: { font: { family: 'Vazirmatn, sans-serif' }, color: textColor } } } 
-                } 
-            }); 
-        }
-
-        function saveGoals(formEl) { const incomeGoal = parseInt(formEl.querySelector('#incomeGoal').value.replace(/,/g, '')) || 0; const expenseGoal = parseInt(formEl.querySelector('#expenseGoal').value.replace(/,/g, '')) || 0; const monthKey = `${moment().jYear()}-${moment().jMonth()}`; state.goals[monthKey] = { income: incomeGoal, expenses: expenseGoal }; DOM.formModal.style.display = 'none'; document.body.style.overflow = ''; showNotification('اهداف ماهانه با موفقیت ذخیره شد.', 'success'); updateGoalsDisplay(); updateAll(); }
-        function updateGoalsDisplay() { 
-            const monthKey = `${moment().jYear()}-${moment().jMonth()}`; 
-            const monthlyGoals = state.goals[monthKey]; 
-            const allWorks = [...state.works, ...state.archive.filter(i => i.itemType === 'work')];
-            const currentMonthIncome = allWorks.filter(w => {
-                if(w.isCredit) return false;
-                const wDate = getJalaliYearAndMonth(w.dateAdded);
-                return wDate.year === moment().jYear() && wDate.month === moment().jMonth();
-            }).reduce((sum, w) => sum + w.total, 0);
-
-            const currentMonthExpenses = state.expenses.filter(e => getJalaliYearAndMonth(e.date).year === moment().jYear() && getJalaliYearAndMonth(e.date).month === moment().jMonth()).reduce((sum, e) => sum + e.amount, 0); 
-            
-            if (monthlyGoals && monthlyGoals.income > 0) { 
-                DOM.incomeGoalValue.textContent = `${formatNumber(monthlyGoals.income)} تومان`; 
-                const progress = Math.min((currentMonthIncome / monthlyGoals.income) * 100, 100); 
-                DOM.incomeGoalProgress.style.width = `${progress}%`; 
-            } else { 
-                DOM.incomeGoalValue.textContent = 'تعیین نشده'; 
-                DOM.incomeGoalProgress.style.width = '0%'; 
-            } 
-            DOM.incomeGoalCurrent.textContent = `${formatNumber(currentMonthIncome)} تومان`; 
-            
-            if (monthlyGoals && monthlyGoals.expenses > 0) { 
-                DOM.expenseGoalValue.textContent = `${formatNumber(monthlyGoals.expenses)} تومان`; 
-                const progress = Math.min((currentMonthExpenses / monthlyGoals.expenses) * 100, 100); 
-                const progressRatio = currentMonthExpenses / monthlyGoals.expenses; 
-                DOM.expenseGoalProgress.style.width = `${progress}%`; 
+            if (monthlyGoals && monthlyGoals.expenses > 0) {
+                DOM.expenseGoalValue.textContent = `${formatNumber(monthlyGoals.expenses)} تومان`;
+                const progress = Math.min((currentMonthExpenses / monthlyGoals.expenses) * 100, 100);
+                const progressRatio = currentMonthExpenses / monthlyGoals.expenses;
+                DOM.expenseGoalProgress.style.width = `${progress}%`;
                 if (progressRatio > 1) { DOM.expenseGoalProgress.style.backgroundColor = 'var(--danger-color)'; } 
                 else if (progressRatio > 0.8) { DOM.expenseGoalProgress.style.backgroundColor = 'var(--warning-color)'; } 
-                else { DOM.expenseGoalProgress.style.backgroundColor = 'var(--success-color)'; } 
-            } else { 
-                DOM.expenseGoalValue.textContent = 'تعیین نشده'; 
-                DOM.expenseGoalProgress.style.width = '0%'; 
-                DOM.expenseGoalProgress.style.backgroundColor = 'var(--success-color)'; 
-            } 
-            DOM.expenseGoalCurrent.textContent = `${formatNumber(currentMonthExpenses)} تومان`; 
-        }
-
-        // تابع جدید برای تاریخچه اهداف
-        function updateGoalHistory() {
-            if (!DOM.goalsHistoryList) return;
-            
-            const m = moment();
-            const allWorks = [...state.works, ...state.archive.filter(i => i.itemType === 'work')];
-            let historyHTML = '';
-            let hasHistory = false;
-
-            // بررسی ۶ ماه گذشته (شامل ماه جاری نمیشود)
-            for (let i = 1; i <= 6; i++) {
-                const targetMonth = m.clone().subtract(i, 'jMonths');
-                const year = targetMonth.jYear();
-                const month = targetMonth.jMonth();
-                const monthKey = `${year}-${month}`;
-                
-                const goal = state.goals[monthKey];
-                
-                if (goal && goal.income > 0) {
-                    hasHistory = true;
-                    const actualIncome = allWorks.filter(w => {
-                        if (w.isCredit) return false;
-                        const wDate = getJalaliYearAndMonth(w.dateAdded);
-                        return wDate.year === year && wDate.month === month;
-                    }).reduce((sum, w) => sum + w.total, 0);
-
-                    let statusClass = 'fail';
-                    let icon = '<i class="fas fa-times-circle" style="color: var(--danger-color)"></i>';
-                    
-                    if (actualIncome >= goal.income * 1.5) {
-                        statusClass = 'super';
-                        icon = '<i class="fas fa-fire" style="color: var(--warning-color)"></i>';
-                    } else if (actualIncome >= goal.income) {
-                        statusClass = 'success';
-                        icon = '<i class="fas fa-check-circle" style="color: var(--success-color)"></i>';
-                    }
-
-                    historyHTML += `
-                        <div class="goal-history-item ${statusClass}">
-                            <div>
-                                <div style="font-weight: bold;">${monthNames[month]} ${year}</div>
-                                <div style="font-size: 12px; color: var(--text-secondary);">
-                                    هدف: ${formatNumber(goal.income)} | عملکرد: ${formatNumber(actualIncome)}
-                                </div>
-                            </div>
-                            <div class="goal-history-icon">${icon}</div>
-                        </div>
-                    `;
-                }
+                else { DOM.expenseGoalProgress.style.backgroundColor = 'var(--info-color)'; }
+            } else {
+                DOM.expenseGoalValue.textContent = 'تعیین نشده';
+                DOM.expenseGoalProgress.style.width = '0%';
+                DOM.expenseGoalProgress.style.backgroundColor = 'var(--info-color)';
             }
-
-            DOM.goalsHistoryList.innerHTML = hasHistory ? historyHTML : '<p style="text-align: center; color: var(--text-secondary); padding: 10px;">هنوز تاریخچه‌ای ثبت نشده است.</p>';
-            adjustCollapsibleHeight(document.getElementById('goals-history-content'));
+            DOM.expenseGoalCurrent.textContent = `${formatNumber(currentMonthExpenses)} تومان`;
         }
 
         function getEmployerStats(employerName) { const allWorksForEmployer = [...state.works, ...state.archive.filter(item => item.itemType === ITEM_TYPES.WORK)].filter(w => w.employer === employerName); const allPaymentsForEmployer = [...state.payments, ...state.archive.filter(item => item.itemType === ITEM_TYPES.PAYMENT)].filter(p => p.employer === employerName); const totalWorkValue = allWorksForEmployer.filter(w => !w.isCredit).reduce((sum, w) => sum + w.total, 0); const totalPaid = allPaymentsForEmployer.reduce((sum, p) => sum + p.amount, 0); const currentBalance = state.works.filter(w => w.employer === employerName).reduce((sum, w) => sum + w.total, 0); const unsettledWorksCount = state.works.filter(w => w.employer === employerName && !w.isCredit && w.paidAmount < w.total).length; return { totalWorkValue, totalPaid, currentBalance, unsettledWorksCount }; }
         function updateEmployersList() { const searchTerm = DOM.employerSearchInput.value.toLowerCase(); const employerNames = [...new Set([...state.works, ...state.archive].map(item => item.employer).filter(Boolean))]; const filteredNames = employerNames.filter(name => name.toLowerCase().includes(searchTerm)); DOM.employersListContainer.innerHTML = ''; if (filteredNames.length === 0) { DOM.employersListContainer.innerHTML = emptyStateEmployersEl; return; } filteredNames.sort().forEach(name => { const stats = getEmployerStats(name); const card = document.createElement('div'); card.className = 'employer-card'; card.dataset.employerName = name; card.innerHTML = ` <div class="employer-card-header"> <span class="employer-name">${name}</span> <span class="employer-balance ${stats.currentBalance >= 0 ? 'negative' : 'positive'}">${formatNumber(Math.abs(stats.currentBalance))} ت</span> </div> <div class="employer-stats"> <span><i class="fas fa-briefcase"></i> ${stats.unsettledWorksCount} کار باز</span> <span><i class="fas fa-hand-holding-dollar"></i> کل دریافتی: ${formatNumber(stats.totalPaid)} ت</span> </div> `; card.addEventListener('click', () => showEmployerDetail(name)); DOM.employersListContainer.appendChild(card); }); }
-        function showEmployerDetail(employerName) { DOM.employerListView.style.display = 'none'; DOM.employerDetailView.style.display = 'block'; const stats = getEmployerStats(employerName); DOM.employerDetailName.textContent = employerName; DOM.employerDetailTotalWork.textContent = `${formatNumber(stats.totalWorkValue)} تومان`; DOM.employerDetailTotalPaid.textContent = `${formatNumber(stats.totalPaid)} تومان`; DOM.employerDetailBalance.textContent = `${formatNumber(Math.abs(stats.currentBalance))} تومان`; DOM.employerDetailBalance.className = `value ${stats.currentBalance >= 0 ? 'negative' : 'positive'}`; DOM.employerDetailBalanceLabel.textContent = stats.currentBalance >= 0 ? 'مانده بدهی' : 'مانده بستانکاری'; const unsettledWorks = state.works.filter(w => w.employer === employerName && !w.isCredit && w.paidAmount < w.total).sort((a,b) => new Date(b.dateAdded) - new Date(a.dateAdded)); DOM.employerDetailUnsettledWorks.innerHTML = ''; if (unsettledWorks.length === 0) { DOM.employerDetailUnsettledWorks.innerHTML = '<div class="empty-state" style="padding: 20px;"><p>این کارفرما کار تسویه نشده‌ای ندارد.</p></div>'; } else { unsettledWorks.forEach(work => { const item = document.createElement('div'); item.className = 'item'; const remaining = work.total - work.paidAmount; item.innerHTML = `<div class="item-details"><div class="item-name">${work.type}</div><div class="item-meta"><span>تاریخ: ${toJalali(work.dateAdded)}</span><span>کل: ${formatNumber(work.total)} ت</span></div></div><div class="expense-amount">مانده: ${formatNumber(remaining)} ت</div>`; DOM.employerDetailUnsettledWorks.appendChild(item); }); } const recentPayments = state.payments.filter(p => p.employer === employerName).sort((a,b) => new Date(b.date) - new Date(a.date)).slice(0, 5); DOM.employerDetailRecentPayments.innerHTML = ''; if (recentPayments.length === 0) { DOM.employerDetailRecentPayments.innerHTML = '<div class="empty-state" style="padding: 20px;"><p>هیچ دریافتی از این کارفرما ثبت نشده است.</p></div>'; } else { recentPayments.forEach(payment => { const item = document.createElement('div'); item.className = 'item'; item.innerHTML = `<div class="item-details"><div class="item-name">${payment.description || 'دریافتی'}</div><div class="item-meta"><span>تاریخ: ${toJalali(payment.date)}</span></div></div><div class="payment-amount">${formatNumber(payment.amount)} ت</div>`; DOM.employerDetailRecentPayments.appendChild(item); }); } }
+        
+        function renderEmployerDetailView(employerName) {
+            DOM.employerListView.style.display = 'none';
+            DOM.employerDetailView.style.display = 'block';
+            const backBtn = document.querySelector('#employers-page .native-back-btn');
+            if(backBtn) {
+                backBtn.style.display = 'flex'; 
+                backBtn.onclick = () => window.history.back();
+            }
+            const stats = getEmployerStats(employerName);
+            DOM.employerDetailName.textContent = employerName;
+            DOM.employerDetailTotalWork.textContent = `${formatNumber(stats.totalWorkValue)} تومان`;
+            DOM.employerDetailTotalPaid.textContent = `${formatNumber(stats.totalPaid)} تومان`;
+            DOM.employerDetailBalance.textContent = `${formatNumber(Math.abs(stats.currentBalance))} تومان`;
+            DOM.employerDetailBalance.className = `value ${stats.currentBalance >= 0 ? 'negative' : 'positive'}`;
+            DOM.employerDetailBalanceLabel.textContent = stats.currentBalance >= 0 ? 'مانده بدهی' : 'مانده بستانکاری';
+            const unsettledWorks = state.works.filter(w => w.employer === employerName && !w.isCredit && w.paidAmount < w.total).sort((a,b) => new Date(b.dateAdded) - new Date(a.dateAdded));
+            DOM.employerDetailUnsettledWorks.innerHTML = '';
+            if (unsettledWorks.length === 0) { DOM.employerDetailUnsettledWorks.innerHTML = '<div class="empty-state" style="padding: 20px;"><p>این کارفرما کار تسویه نشده‌ای ندارد.</p></div>'; } else { unsettledWorks.forEach(work => { const item = document.createElement('div'); item.className = 'item'; const remaining = work.total - work.paidAmount; item.innerHTML = `<div class="item-details"><div class="item-name">${work.type}</div><div class="item-meta"><span>تاریخ: ${toJalali(work.dateAdded)}</span><span>کل: ${formatNumber(work.total)} ت</span></div></div><div class="expense-amount">مانده: ${formatNumber(remaining)} ت</div>`; DOM.employerDetailUnsettledWorks.appendChild(item); }); } 
+            const recentPayments = state.payments.filter(p => p.employer === employerName).sort((a,b) => new Date(b.date) - new Date(a.date)).slice(0, 5); 
+            DOM.employerDetailRecentPayments.innerHTML = ''; 
+            if (recentPayments.length === 0) { DOM.employerDetailRecentPayments.innerHTML = '<div class="empty-state" style="padding: 20px;"><p>هیچ دریافتی از این کارفرما ثبت نشده است.</p></div>'; } else { recentPayments.forEach(payment => { const item = document.createElement('div'); item.className = 'item'; item.innerHTML = `<div class="item-details"><div class="item-name">${payment.description || 'دریافتی'}</div><div class="item-meta"><span>تاریخ: ${toJalali(payment.date)}</span></div></div><div class="payment-amount">${formatNumber(payment.amount)} ت</div>`; DOM.employerDetailRecentPayments.appendChild(item); }); }
+        }
+
+        function showEmployerDetail(employerName) {
+            history.pushState({ pageId: 'employers-page', subView: 'detail', employer: employerName }, null, "#employer-detail");
+            renderEmployerDetailView(employerName);
+        }
         
         function clearFormErrors(formEl) {
             formEl.querySelectorAll('.has-error').forEach(el => el.classList.remove('has-error'));
@@ -889,17 +906,14 @@
         function workSubmit() {
             const formContainer = DOM.formModalBody;
             clearFormErrors(formContainer); 
-
             const employerInput = formContainer.querySelector('#workEmployer');
             const typeInput = formContainer.querySelector('#workType');
             const countInput = formContainer.querySelector('#workCount');
             const priceInput = formContainer.querySelector('#workPrice');
-
             const employer = employerInput.value.trim();
             const type = typeInput.value.trim();
             const count = parseInt(countInput.value.replace(/,/g, ''));
             const price = parseInt(priceInput.value.replace(/,/g, ''));
-
             const dateStartedStr = formContainer.querySelector('#workDateStarted').value.trim();
             const dateFinishedInput = formContainer.querySelector('#workDateFinished');
             const dateFinishedStr = dateFinishedInput ? dateFinishedInput.value.trim() : null;
@@ -949,6 +963,7 @@
             state.editingItemType = null;
             DOM.formModal.style.display = 'none';
             document.body.style.overflow = '';
+            if(window.history.state && window.history.state.modal) window.history.back();
             updateAll();
         }
 
@@ -984,7 +999,10 @@
                 const cancelBtn = document.createElement('button'); 
                 cancelBtn.textContent = 'لغو'; 
                 cancelBtn.className = 'btn btn-secondary'; 
-                cancelBtn.addEventListener('click', () => { state.editingItemId = null; state.editingItemType = null; DOM.formModal.style.display = 'none'; document.body.style.overflow = ''; }); 
+                cancelBtn.addEventListener('click', () => { 
+                    state.editingItemId = null; state.editingItemType = null; DOM.formModal.style.display = 'none'; document.body.style.overflow = ''; 
+                    if(window.history.state && window.history.state.modal) window.history.back();
+                }); 
                 submitBtn.parentElement.appendChild(cancelBtn); 
             }); 
         }
@@ -996,23 +1014,18 @@
         function paymentSubmit() {
             const formContainer = DOM.formModalBody;
             clearFormErrors(formContainer);
-
             const employerSelect = formContainer.querySelector('#paymentEmployer');
             const amountInput = formContainer.querySelector('#paymentAmount');
             const dateInput = formContainer.querySelector('#paymentDate');
-
             const employer = employerSelect.value;
             const amount = parseInt(amountInput.value.replace(/,/g, ''));
             const dateStr = dateInput.value;
             const description = formContainer.querySelector('#paymentDescription').value.trim();
-
             if (!employer) { employerSelect.classList.add('has-error'); return showNotification('لطفاً کارفرمای پرداخت کننده را انتخاب کنید.', 'error'); }
             if (isNaN(amount) || amount <= 0) { amountInput.classList.add('has-error'); return showNotification('لطفاً مبلغ معتبر وارد کنید.', 'error'); }
             if (!isValidJalaliDate(dateStr)) { dateInput.classList.add('has-error'); return showNotification('لطفاً تاریخ شمسی با فرمت صحیح وارد کنید.', 'error'); }
-            
             const date = jalaliToGregorian(dateStr).toISOString();
             const jalaliDate = toJalali(date);
-
             if (state.editingItemId) {
                 const pIndex = state.payments.findIndex(p => p.id === state.editingItemId);
                 if (pIndex > -1) {
@@ -1031,6 +1044,7 @@
             state.editingItemType = null;
             DOM.formModal.style.display = 'none';
             document.body.style.overflow = '';
+            if(window.history.state && window.history.state.modal) window.history.back();
             updateAll();
         }
 
@@ -1044,21 +1058,21 @@
                 populateEmployerDropdown(employerSelect); 
                 employerSelect.value = payment.employer; 
                 formEl.querySelector('#paymentAmount').value = payment.amount; 
-                
                 const dateInput = formEl.querySelector('#paymentDate');
                 setupDateInputMask(dateInput);
                 dateInput.value = payment.jalaliDate || getCurrentJalaliDate(); 
-                
                 formEl.querySelector('#paymentDescription').value = payment.description; 
                 const submitBtn = formEl.querySelector('#paymentSubmitBtn'); 
                 submitBtn.textContent = 'به‌روزرسانی دریافتی'; 
                 submitBtn.className = 'btn btn-update'; 
                 submitBtn.addEventListener('click', () => runWithNativeDelay(submitBtn, () => paymentSubmit(id, formEl))); 
-
                 const cancelBtn = document.createElement('button'); 
                 cancelBtn.textContent = 'لغو'; 
                 cancelBtn.className = 'btn btn-secondary'; 
-                cancelBtn.addEventListener('click', () => { state.editingItemId = null; state.editingItemType = null; DOM.formModal.style.display = 'none'; document.body.style.overflow = ''; }); 
+                cancelBtn.addEventListener('click', () => { 
+                    state.editingItemId = null; state.editingItemType = null; DOM.formModal.style.display = 'none'; document.body.style.overflow = ''; 
+                    if(window.history.state && window.history.state.modal) window.history.back();
+                }); 
                 submitBtn.parentElement.appendChild(cancelBtn); 
             }); 
         }
@@ -1070,24 +1084,19 @@
         function expenseSubmit() {
             const formContainer = DOM.formModalBody;
             clearFormErrors(formContainer);
-
             const titleInput = formContainer.querySelector('#expenseTitle');
             const amountInput = formContainer.querySelector('#expenseAmount');
             const dateInput = formContainer.querySelector('#expenseDate');
-            
             const title = titleInput.value.trim();
             const category = formContainer.querySelector('#expenseCategory').value;
             const amount = parseInt(amountInput.value.replace(/,/g, ''));
             const dateStr = dateInput.value;
             const description = formContainer.querySelector('#expenseDescription').value.trim();
-
             if (!title) { titleInput.classList.add('has-error'); return showNotification('لطفاً عنوان هزینه را وارد کنید.', 'error'); }
             if (isNaN(amount) || amount <= 0) { amountInput.classList.add('has-error'); return showNotification('لطفاً مبلغ معتبر وارد کنید.', 'error'); }
             if (!isValidJalaliDate(dateStr)) { dateInput.classList.add('has-error'); return showNotification('لطفاً تاریخ شمسی با فرمت صحیح وارد کنید.', 'error'); }
-
             const date = jalaliToGregorian(dateStr).toISOString();
             const jalaliDate = toJalali(date);
-
             if (state.editingItemId) {
                 const eIndex = state.expenses.findIndex(e => e.id === state.editingItemId);
                 if (eIndex > -1) {
@@ -1102,6 +1111,7 @@
             state.editingItemType = null;
             DOM.formModal.style.display = 'none';
             document.body.style.overflow = '';
+            if(window.history.state && window.history.state.modal) window.history.back();
             updateAll();
         }
 
@@ -1116,21 +1126,21 @@
                 formEl.querySelector('#expenseTitle').value = expense.title; 
                 categorySelect.value = expense.category || 'عمومی'; 
                 formEl.querySelector('#expenseAmount').value = expense.amount; 
-                
                 const dateInput = formEl.querySelector('#expenseDate');
                 setupDateInputMask(dateInput);
                 dateInput.value = expense.jalaliDate || getCurrentJalaliDate(); 
-                
                 formEl.querySelector('#expenseDescription').value = expense.description; 
                 const submitBtn = formEl.querySelector('#expenseSubmitBtn'); 
                 submitBtn.textContent = 'به‌روزرسانی هزینه'; 
                 submitBtn.className = 'btn btn-update'; 
                 submitBtn.addEventListener('click', () => runWithNativeDelay(submitBtn, () => expenseSubmit())); 
-
                 const cancelBtn = document.createElement('button'); 
                 cancelBtn.textContent = 'لغو'; 
                 cancelBtn.className = 'btn btn-secondary'; 
-                cancelBtn.addEventListener('click', () => { state.editingItemId = null; state.editingItemType = null; DOM.formModal.style.display = 'none'; document.body.style.overflow = ''; }); 
+                cancelBtn.addEventListener('click', () => { 
+                    state.editingItemId = null; state.editingItemType = null; DOM.formModal.style.display = 'none'; document.body.style.overflow = ''; 
+                    if(window.history.state && window.history.state.modal) window.history.back();
+                }); 
                 submitBtn.parentElement.appendChild(cancelBtn); 
             }); 
         }
@@ -1138,26 +1148,18 @@
         
         function updateExpenseChart() {
             if(!DOM.expenseCategoryChart) return;
-            
             const categoryTotals = state.expenses.reduce((acc, expense) => {
                 const category = expense.category || 'متفرقه';
                 acc[category] = (acc[category] || 0) + expense.amount;
                 return acc;
             }, {});
-
             const labels = Object.keys(categoryTotals);
             const data = Object.values(categoryTotals);
-
             if (expenseChart) expenseChart.destroy();
-            
-            if(data.length === 0) {
-                return;
-            }
-
+            if(data.length === 0) { return; }
             const computedStyle = getComputedStyle(DOM.body);
             const textColor = computedStyle.getPropertyValue('--text-primary');
             const chartColors = ['#3B82F6', '#10B981', '#EF4444', '#F59E0B', '#8B5CF6', '#6B7281', '#F472B6'];
-
             expenseChart = new Chart(DOM.expenseCategoryChart, {
                 type: 'doughnut',
                 data: {
@@ -1197,11 +1199,44 @@
         function updateMonthlyChart() { if(!DOM.monthlyChart) return; const monthlyData = {}; [...state.payments, ...state.archive.filter(i => i.itemType === ITEM_TYPES.PAYMENT)].flat().forEach(p => { const date = new Date(p.date); const key = `${moment(date).jYear()}-${moment(date).jMonth()}`; monthlyData[key] = { year: moment(date).jYear(), month: moment(date).jMonth(), amount: (monthlyData[key]?.amount || 0) + p.amount }; }); const data = Object.values(monthlyData).sort((a,b) => a.year - b.year || a.month - b.month); if (myChart) myChart.destroy(); const computedStyle = getComputedStyle(DOM.body); const gridColor = computedStyle.getPropertyValue('--border-color'); const textColor = computedStyle.getPropertyValue('--text-primary'); myChart = new Chart(DOM.monthlyChart, { type: 'bar', data: { labels: data.map(d => `${monthNames[d.month]} ${d.year}`), datasets: [{ label: 'درآمد ماهانه (تومان)', data: data.map(d => d.amount), backgroundColor: computedStyle.getPropertyValue('--success-color'), borderRadius: 5 }] }, options: { responsive: true, maintainAspectRatio: false, scales: { y: { beginAtZero: true, grid: { color: gridColor }, ticks: { color: textColor } }, x: { grid: { display: false }, ticks: { color: textColor } } }, plugins: { legend: { labels: { font: { family: 'Vazirmatn, sans-serif' }, color: textColor } } } } }); }
         function generateCustomReport() { const startDateStr = DOM.reportStartDateInput.value; const endDateStr = DOM.reportEndDateInput.value; if (!isValidJalaliDate(startDateStr) || !isValidJalaliDate(endDateStr)) return showNotification('لطفاً تاریخ شروع و پایان را با فرمت صحیح وارد کنید.', 'error'); const startDate = jalaliToGregorian(startDateStr).setHours(0,0,0,0); const endDate = jalaliToGregorian(endDateStr).setHours(23,59,59,999); const worksInRange = state.works.filter(w => !w.isCredit && new Date(w.dateAdded) >= startDate && new Date(w.dateAdded) <= endDate); const paymentsInRange = state.payments.filter(p => new Date(p.date) >= startDate && new Date(p.date) <= endDate); const expensesInRange = state.expenses.filter(e => new Date(e.date) >= startDate && new Date(e.date) <= endDate); const totalWorkValue = worksInRange.reduce((s, w) => s + w.total, 0); const totalPaymentValue = paymentsInRange.reduce((s, p) => s + p.amount, 0); const totalExpenseValue = expensesInRange.reduce((s, e) => s + e.amount, 0); const balance = totalPaymentValue - totalExpenseValue; let reportHTML = `<div class="summary-row"><span>جمع کارها:</span> <span>${formatNumber(totalWorkValue)} تومان</span></div><div class="summary-row"><span>جمع دریافتی‌ها:</span> <span>${formatNumber(totalPaymentValue)} تومان</span></div><div class="summary-row"><span>جمع هزینه‌ها:</span> <span>${formatNumber(totalExpenseValue)} تومان</span></div><div class="summary-row"><span class="summary-label">سود/زیان خالص:</span> <span class="summary-balance ${balance >= 0 ? 'positive' : 'negative'}">${formatNumber(Math.abs(balance))} تومان</span></div><h4>کارهای ثبت‌شده (${worksInRange.length})</h4>`; reportHTML += worksInRange.length > 0 ? worksInRange.map(w => `<div class="item-sm"><strong>${w.employer} - ${w.type}</strong> - ${formatNumber(w.total)} تومان</div>`).join('') : '<p>کاری در این بازه زمانی ثبت نشده است.</p>'; reportHTML += `<h4>دریافتی‌ها (${paymentsInRange.length})</h4>`; reportHTML += paymentsInRange.length > 0 ? paymentsInRange.map(p => `<div class="item-sm"><strong>${p.employer} (${p.description || 'دریافتی'})</strong> (${toJalali(p.date)}) - ${formatNumber(p.amount)} تومان</div>`).join('') : '<p>دریافتی در این بازه زمانی ثبت نشده است.</p>'; reportHTML += `<h4>هزینه‌ها (${expensesInRange.length})</h4>`; reportHTML += expensesInRange.length > 0 ? expensesInRange.map(e => `<div class="item-sm"><strong>${e.title} (${e.category})</strong> (${toJalali(e.date)}) - ${formatNumber(e.amount)} تومان</div>`).join('') : '<p>هزینه‌ای در این بازه زمانی ثبت نشده است.</p>'; document.getElementById('report-modal-title').textContent = `گزارش از ${startDateStr} تا ${endDateStr}`; DOM.reportModalBody.innerHTML = reportHTML; DOM.reportModal.style.display = 'flex'; }
         function updateArchiveLists() { DOM.archivedWorksList.innerHTML = ''; const archivedWorks = state.archive.filter(item => item.itemType === ITEM_TYPES.WORK); if (archivedWorks.length === 0) { DOM.archivedWorksList.innerHTML = emptyStateArchivedWorksEl; } else { archivedWorks.sort((a, b) => new Date(b.dateArchived) - new Date(a.dateArchived)).forEach(item => { const itemEl = document.createElement('div'); itemEl.className = 'item'; itemEl.innerHTML = `<div class="item-details"><div class="item-name">${item.employer} - ${item.type}</div><div class="item-meta"><span>تاریخ بایگانی: ${toJalali(item.dateArchived)}</span></div></div><div style="text-align: left;"><div class="item-total" style="margin-bottom: 8px;">${formatNumber(item.total)} تومان</div><div class="item-actions"><button class="action-btn restore-btn" title="بازیابی"><i class="fas fa-undo"></i></button><button class="action-btn delete-btn" title="حذف دائمی"><i class="fas fa-trash-alt"></i></button></div></div>`; itemEl.querySelector('.restore-btn').addEventListener('click', () => restoreItem(item.id)); itemEl.querySelector('.delete-btn').addEventListener('click', () => deletePermanent(item.id)); DOM.archivedWorksList.appendChild(itemEl); }); } adjustCollapsibleHeight(DOM.archivedWorksList); DOM.archivedPaymentsList.innerHTML = ''; const archivedPayments = state.archive.filter(item => item.itemType === ITEM_TYPES.PAYMENT); if (archivedPayments.length === 0) { DOM.archivedPaymentsList.innerHTML = emptyStateArchivedPaymentsEl; } else { archivedPayments.sort((a, b) => new Date(b.dateArchived) - new Date(a.dateArchived)).forEach(item => { const itemEl = document.createElement('div'); itemEl.className = 'item'; itemEl.innerHTML = `<div class="item-details"><div class="item-name">${item.employer} - ${item.description || 'دریافتی بایگانی‌شده'}</div><div class="item-meta"><span>تاریخ بایگانی: ${toJalali(item.dateArchived)}</span></div></div><div style="text-align: left;"><div class="payment-amount" style="margin-bottom: 8px;">${formatNumber(item.amount)} تومان</div><div class="item-actions"><button class="action-btn restore-btn" title="بازیابی"><i class="fas fa-undo"></i></button><button class="action-btn delete-btn" title="حذف دائمی"><i class="fas fa-trash-alt"></i></button></div></div>`; itemEl.querySelector('.restore-btn').addEventListener('click', () => restoreItem(item.id)); itemEl.querySelector('.delete-btn').addEventListener('click', () => deletePermanent(item.id)); DOM.archivedPaymentsList.appendChild(itemEl); }); } adjustCollapsibleHeight(DOM.archivedPaymentsList); }
-        function downloadBackup() { const dataStr = JSON.stringify(state, null, 2); const dataBlob = new Blob([dataStr], { type: 'application/json' }); const url = URL.createObjectURL(dataBlob); const link = document.createElement('a'); link.href = url; link.download = `financial_backup_${new Date().toISOString().slice(0, 10)}.json`; link.click(); URL.revokeObjectURL(url); showNotification('فایل پشتیبان با موفقیت دانلود شد.', 'success'); }
+        function downloadBackup(silent = false) { 
+            const dataStr = JSON.stringify(state, null, 2); 
+            const dataBlob = new Blob([dataStr], { type: 'application/json' }); 
+            const url = URL.createObjectURL(dataBlob); 
+            const link = document.createElement('a'); 
+            link.href = url; 
+            link.download = `financial_backup_${new Date().toISOString().slice(0, 10)}.json`; 
+            link.click(); 
+            URL.revokeObjectURL(url); 
+            if(!silent) showNotification('فایل پشتیبان با موفقیت دانلود شد.', 'success'); 
+        }
         function restoreBackup(event) { const file = event.target.files[0]; if (!file || !file.name.endsWith('.json')) return showNotification('لطفاً یک فایل JSON معتبر انتخاب کنید.', 'error'); const reader = new FileReader(); reader.onload = (e) => { try { const loadedState = JSON.parse(e.target.result); if (loadedState.works !== undefined && loadedState.payments !== undefined && loadedState.archive !== undefined) { showConfirmModal('بازیابی پشتیبان', 'با بازیابی این فایل، تمام اطلاعات فعلی شما پاک خواهد شد. آیا مطمئن هستید؟', () => { state = loadedState; loadFromLocalStorage(); updateAll(); initCollapsibles(); switchPage('dashboard-page'); showNotification('پشتیبان با موفقیت بازیابی شد.', 'success'); }); } else showNotification('فایل پشتیبان معتبر نیست.', 'error'); } catch (error) { showNotification('خطا در خواندن فایل.', 'error'); } finally { event.target.value = ''; } }; reader.readText(file); }
         function renderPaginationControls(container, totalItems, currentPage, itemsPerPage, onPageChange) { container.innerHTML = ''; const totalPages = Math.ceil(totalItems / itemsPerPage); if (totalPages <= 1) return; const prevButton = document.createElement('button'); prevButton.className = 'page-btn'; prevButton.textContent = 'صفحه قبل'; prevButton.disabled = currentPage === 1; prevButton.addEventListener('click', () => onPageChange(currentPage - 1)); const pageInfo = document.createElement('span'); pageInfo.className = 'page-info'; pageInfo.textContent = `صفحه ${currentPage} از ${totalPages}`; const nextButton = document.createElement('button'); nextButton.className = 'page-btn'; nextButton.textContent = 'صفحه بعد'; nextButton.disabled = currentPage === totalPages; nextButton.addEventListener('click', () => onPageChange(currentPage + 1)); container.append(prevButton, pageInfo, nextButton); }
         function adjustCollapsibleHeight(contentElement) { if (contentElement.classList.contains('open')) setTimeout(() => { contentElement.style.maxHeight = contentElement.scrollHeight + "px"; }, 50); }
-        function initCollapsibles() { document.querySelectorAll('.collapsible-header').forEach(header => { const content = header.closest('.card').querySelector('.collapsible-content'); if (!content) return; if (state.collapsibleStates[content.id]) { header.classList.add('active'); content.classList.add('open'); setTimeout(() => content.style.maxHeight = content.scrollHeight + 'px', 100); } header.addEventListener('click', (e) => { if(e.target.tagName === 'INPUT') return; header.classList.toggle('active'); content.classList.toggle('open'); content.style.maxHeight = content.style.maxHeight ? null : content.scrollHeight + "px"; state.collapsibleStates[content.id] = header.classList.contains('active'); saveToLocalStorage(); }); }); }
+        
+        function initCollapsibles() { 
+            document.querySelectorAll('.collapsible-header').forEach(header => { 
+                // FIX: Use nextElementSibling instead of querySelector on closest card
+                // This ensures we only target the specific content associated with this header
+                const content = header.nextElementSibling;
+                
+                if (!content || !content.classList.contains('collapsible-content')) return; 
+                
+                if (state.collapsibleStates[content.id]) { 
+                    header.classList.add('active'); 
+                    content.classList.add('open'); 
+                    setTimeout(() => content.style.maxHeight = content.scrollHeight + 'px', 100); 
+                } 
+                header.addEventListener('click', (e) => { 
+                    if(e.target.tagName === 'INPUT') return; 
+                    header.classList.toggle('active'); 
+                    content.classList.toggle('open'); 
+                    content.style.maxHeight = content.style.maxHeight ? null : content.scrollHeight + "px"; 
+                    state.collapsibleStates[content.id] = header.classList.contains('active'); 
+                    saveToLocalStorage(); 
+                }); 
+            }); 
+        }
         
         function renameEmployerGlobal(oldName) {
             showFormInModal('تغییر نام کارفرما (کلی)', 'rename-employer-template', (formEl) => {
@@ -1211,20 +1246,15 @@
                     const newName = input.value.trim();
                     if (!newName) return showNotification('لطفاً نام جدید را وارد کنید', 'error');
                     if (newName === oldName) { DOM.formModal.style.display = 'none'; return; }
-
-                    // Update Works
                     let updateCount = 0;
                     state.works.forEach(w => { if(w.employer === oldName) { w.employer = newName; updateCount++; } });
                     state.payments.forEach(p => { if(p.employer === oldName) { p.employer = newName; updateCount++; } });
                     state.archive.forEach(a => { if(a.employer === oldName) { a.employer = newName; updateCount++; } });
-
                     showNotification(`نام کارفرما در تمام سوابق (${updateCount} مورد) تغییر کرد.`, 'success');
                     DOM.formModal.style.display = 'none';
                     document.body.style.overflow = '';
-                    
-                    // If user merged two employers by renaming, we need to recalculate balance
+                    if(window.history.state && window.history.state.modal) window.history.back();
                     recalculateEmployerBalance(newName);
-                    
                     DOM.employerListView.style.display = 'block';
                     DOM.employerDetailView.style.display = 'none';
                     updateAll();
@@ -1238,20 +1268,13 @@
                 templateId: 'work-form-template', 
                 setup: (formEl) => { 
                     updateEmployerDatalist(formEl); 
-                    
-                    // Masking for dates
                     const startDateInput = formEl.querySelector('#workDateStarted');
                     setupDateInputMask(startDateInput);
                     const finishDateInput = formEl.querySelector('#workDateFinished');
                     if(finishDateInput) setupDateInputMask(finishDateInput);
-
-                    // Native delay on submit
                     const submitBtn = formEl.querySelector('#workSubmitBtn');
                     submitBtn.addEventListener('click', () => runWithNativeDelay(submitBtn, workSubmit));
-                    
-                    formEl.querySelector('#setStartDateBtn').addEventListener('click', () => { 
-                        startDateInput.value = getCurrentJalaliDate(); 
-                    }); 
+                    formEl.querySelector('#setStartDateBtn').addEventListener('click', () => { startDateInput.value = getCurrentJalaliDate(); }); 
                 } 
             },
             'payment': { 
@@ -1259,13 +1282,9 @@
                 templateId: 'payment-form-template', 
                 setup: (formEl) => { 
                     populateEmployerDropdown(formEl.querySelector('#paymentEmployer')); 
-                    
-                    // Masking for date
                     const dateInput = formEl.querySelector('#paymentDate');
                     setupDateInputMask(dateInput);
                     dateInput.value = getCurrentJalaliDate(); 
-                    
-                    // Native delay on submit
                     const submitBtn = formEl.querySelector('#paymentSubmitBtn');
                     submitBtn.addEventListener('click', () => runWithNativeDelay(submitBtn, paymentSubmit));
                 } 
@@ -1276,13 +1295,9 @@
                 setup: (formEl) => { 
                     const categorySelect = formEl.querySelector('#expenseCategory'); 
                     categorySelect.innerHTML = expenseCategories.map(c => `<option value="${c}">${c}</option>`).join(''); 
-                    
-                    // Masking for date
                     const dateInput = formEl.querySelector('#expenseDate');
                     setupDateInputMask(dateInput);
                     dateInput.value = getCurrentJalaliDate(); 
-                    
-                    // Native delay on submit
                     const submitBtn = formEl.querySelector('#expenseSubmitBtn');
                     submitBtn.addEventListener('click', () => runWithNativeDelay(submitBtn, expenseSubmit));
                 } 
@@ -1294,9 +1309,7 @@
             const config = formConfigs[itemType];
             if (config) {
                 DOM.formModal.style.display = 'none';
-                setTimeout(() => {
-                    showFormInModal(config.title, config.templateId, config.setup);
-                }, 200);
+                setTimeout(() => { showFormInModal(config.title, config.templateId, config.setup); }, 200);
             }
         }
 
@@ -1306,11 +1319,27 @@
             loadFromLocalStorage(); 
             initCollapsibles(); 
             
-            // Set Initial State for History API
             history.replaceState({ pageId: 'dashboard-page' }, null, '#dashboard-page');
 
-            // Listen for Back Button (PopState)
             window.addEventListener('popstate', (event) => {
+                if (DOM.formModal.style.display === 'flex' || DOM.reportModal.style.display === 'flex' || DOM.confirmModal.style.display === 'flex') {
+                    DOM.formModal.style.display = 'none';
+                    DOM.reportModal.style.display = 'none';
+                    DOM.confirmModal.style.display = 'none';
+                    state.editingItemId=null; 
+                    document.body.style.overflow = '';
+                    return; 
+                }
+
+                if (event.state && event.state.subView === 'detail') {
+                    renderEmployerDetailView(event.state.employer);
+                    switchPage('employers-page', true); 
+                    return;
+                } else {
+                    DOM.employerListView.style.display = 'block';
+                    DOM.employerDetailView.style.display = 'none';
+                }
+
                 if (event.state && event.state.pageId) {
                     switchPage(event.state.pageId, true);
                 } else {
@@ -1318,7 +1347,6 @@
                 }
             });
             
-            // فعال‌سازی ماسک تاریخ برای گزارشات
             setupDateInputMask(DOM.reportStartDateInput);
             setupDateInputMask(DOM.reportEndDateInput);
             
@@ -1330,7 +1358,6 @@
                     cancelButton: { text: 'خروج', type: 'button', classes: 'shepherd-button-secondary' }
                 }
             });
-
             tour.addStep({ id: 'welcome', text: 'به حساب‌یار فریلنسر خوش آمدید!', buttons: [{ text: 'شروع کنیم', action: tour.next }] });
             tour.addStep({ id: 'dashboard', title: 'داشبورد اصلی', text: 'اینجا نمای کلی از وضعیت مالی شماست.', attachTo: { element: '.dashboard-hero-card', on: 'bottom' }, buttons: [{ text: 'قبلی', action: tour.back, classes: 'shepherd-button-secondary' }, { text: 'بعدی', action: tour.next }], when: { show: () => switchPage('dashboard-page') } });
             tour.addStep({ id: 'menu', title: 'منوی اصلی', text: 'از این منو برای جابجایی بین بخش‌های برنامه استفاده کنید.', attachTo: { element: () => window.innerWidth > 768 ? '.sidebar' : '.mobile-nav', on: () => window.innerWidth > 768 ? 'right' : 'top' }, buttons: [{ text: 'قبلی', action: tour.back, classes: 'shepherd-button-secondary' }, { text: 'بعدی', action: tour.next }], when: { show: () => switchPage('dashboard-page') } });
@@ -1344,7 +1371,7 @@
             DOM.startTourBtn.addEventListener('click', () => { switchPage('dashboard-page').then(() => { setTimeout(() => tour.start(), 200); }); });
             [...DOM.mobileNavBtns].filter(b => b.dataset.page).forEach(btn => btn.addEventListener('click', () => switchPage(btn.dataset.page)));
             DOM.navBtns.forEach(btn => btn.addEventListener('click', () => switchPage(btn.dataset.page))); 
-            DOM.downloadBackupBtn.addEventListener('click', downloadBackup); 
+            DOM.downloadBackupBtn.addEventListener('click', () => downloadBackup(false)); 
             DOM.exportExcelBtn.addEventListener('click', exportToCSV); 
             DOM.uploadBackupInput.addEventListener('change', restoreBackup); 
             DOM.generateCustomReportBtn.addEventListener('click', generateCustomReport); 
@@ -1353,11 +1380,30 @@
             DOM.paymentSearchInput.addEventListener('input', updatePaymentsList); 
             DOM.expenseSearchInput.addEventListener('input', updateExpensesList); 
             DOM.employerSearchInput.addEventListener('input', updateEmployersList); 
-            DOM.backToEmployersListBtn.addEventListener('click', () => { DOM.employerDetailView.style.display = 'none'; DOM.employerListView.style.display = 'block'; }); 
+            DOM.backToEmployersListBtn.addEventListener('click', () => { window.history.back(); }); 
             DOM.editEmployerNameBtn.addEventListener('click', () => renameEmployerGlobal(DOM.employerDetailName.textContent));
 
-            document.querySelectorAll('[data-modal-close]').forEach(btn => btn.addEventListener('click', () => { btn.closest('.modal-overlay').style.display = 'none'; state.editingItemId=null; document.body.style.overflow = ''; })); 
-            document.querySelectorAll('.modal-overlay').forEach(modal => modal.addEventListener('click', (e) => { if (e.target === modal) { modal.style.display = 'none'; state.editingItemId=null; document.body.style.overflow = ''; } })); 
+            DOM.autoBackupToggle.addEventListener('change', (e) => {
+                state.autoBackup = e.target.checked;
+                saveToLocalStorage();
+                if(state.autoBackup) showNotification('پشتیبان‌گیری خودکار فعال شد.', 'success');
+                else showNotification('پشتیبان‌گیری خودکار غیرفعال شد.', 'info');
+            });
+
+            document.querySelectorAll('[data-modal-close]').forEach(btn => btn.addEventListener('click', () => { 
+                if(window.history.state && window.history.state.modal) window.history.back();
+                else {
+                    btn.closest('.modal-overlay').style.display = 'none'; state.editingItemId=null; document.body.style.overflow = '';
+                }
+            })); 
+            document.querySelectorAll('.modal-overlay').forEach(modal => modal.addEventListener('click', (e) => { 
+                if (e.target === modal) { 
+                    if(window.history.state && window.history.state.modal) window.history.back();
+                    else {
+                        modal.style.display = 'none'; state.editingItemId=null; document.body.style.overflow = ''; 
+                    }
+                } 
+            })); 
             
             DOM.mobileFabCenter.addEventListener('click', () => {
                 showFormInModal('افزودن آیتم جدید', 'add-item-menu-template', (formEl) => {
@@ -1401,7 +1447,3 @@
   </script>
 </body>
 </html>
-```
-405.9s
-Use Arrow Up and Arrow Down to select a turn, Enter to jump to it, and Escape to return to the chat.
-Start typing a prompt
