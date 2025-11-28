@@ -33,7 +33,8 @@
         body.theme-midnight { color-scheme: dark; --primary-color: #8B5CF6; --primary-hover: #7C3AED; --bg-color: #1E293B; --card-bg-color: #334155; --text-primary: #F1F5F9; --text-secondary: #94A3B8; --border-color: #475569; }
         body.theme-green { color-scheme: light; --primary-color: #10B981; --primary-hover: #059669; --info-color: #3B82F6; --info-hover: #2563EB; --bg-color: #F0FDF4; --card-bg-color: #FFFFFF; --border-color: #D1FAE5; }
         body.theme-ocean { color-scheme: light; --primary-color: #2563EB; --primary-hover: #1D4ED8; --bg-color: #EFF6FF; --card-bg-color: #FFFFFF; --text-primary: #1E3A8A; --text-secondary: #64748B; --border-color: #DBEAFE; --success-color: #16A34A; --danger-color: #DC2626; --warning-color: #D97706; }
-        body.theme-royal { color-scheme: dark; --bg-color: #5D1A23; --card-bg-color: #7B2E3A; --text-primary: #F5EBE0; --text-secondary: #D5BDAF; --border-color: #A4626D; --primary-color: #D4AF37; --primary-hover: #B89B2E; --success-color: #57CC99; --danger-color: #FF6B6B; --info-color: #A9B4C2; }
+        /* استایل Royal در انتهای فایل بازنویسی می‌شود */
+        body.theme-royal { color-scheme: dark; }
         
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body { font-family: var(--font-family); background-color: var(--bg-color); color: var(--text-primary); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; transition: background-color 0.3s ease, color 0.3s ease; user-select: none; -webkit-tap-highlight-color: transparent; }
@@ -179,8 +180,54 @@
         .notification.success { background-color: #10B981; }
         .notification.error { background-color: #EF4444; }
         
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0,0,0,0.5); display: none; justify-content: center; align-items: flex-end; z-index: 2000; }
+        /* -----------------------------------------------
+           MODAL STYLES (UPDATED FOR SMOOTH ANIMATION)
+           ----------------------------------------------- */
         
+        /* انیمیشن ورود Overlay */
+        @keyframes overlayFade {
+            from { background-color: rgba(0,0,0,0); backdrop-filter: blur(0px); }
+            to { background-color: rgba(0,0,0,0.5); backdrop-filter: blur(2px); }
+        }
+
+        /* انیمیشن خروج Overlay */
+        @keyframes overlayFadeOut {
+            from { background-color: rgba(0,0,0,0.5); backdrop-filter: blur(2px); }
+            to { background-color: rgba(0,0,0,0); backdrop-filter: blur(0px); }
+        }
+
+        .modal-overlay { 
+            position: fixed; 
+            top: 0; 
+            left: 0; 
+            width: 100%; 
+            height: 100%; 
+            background-color: rgba(0,0,0,0.5); 
+            display: none; 
+            justify-content: center; 
+            align-items: flex-end; 
+            z-index: 2000; 
+            /* انیمیشن ورود پیش‌فرض */
+            animation: overlayFade 0.3s ease-out forwards;
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+        }
+
+        /* کلاس کمکی برای انیمیشن بسته شدن */
+        .modal-overlay.closing {
+            animation: overlayFadeOut 0.3s forwards !important;
+            pointer-events: none; /* جلوگیری از کلیک حین بسته شدن */
+        }
+        
+        /* انیمیشن ورود محتوا (موبایل) */
+        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
+
+        /* انیمیشن خروج محتوا (موبایل) */
+        @keyframes slideDown { from { transform: translateY(0); opacity: 1; } to { transform: translateY(100%); opacity: 1; } }
+
+        /* انیمیشن خروج محتوا (دسکتاپ) */
+        @keyframes fadeOut { from { opacity: 1; transform: translateY(0); } to { opacity: 0; transform: translateY(10px); } }
+
         .modal-content { 
             background: var(--card-bg-color); padding: 24px; 
             border-radius: 24px 24px 0 0; width: 100%; max-width: 600px; 
@@ -188,12 +235,23 @@
             animation: slideUp 0.3s ease-out;
         }
         
+        /* وقتی مودال در حال بسته شدن است (موبایل) */
+        .modal-overlay.closing .modal-content {
+            animation: slideDown 0.3s forwards !important;
+        }
+        
         @media (min-width: 769px) {
             .modal-overlay { align-items: center; }
-            .modal-content { border-radius: var(--border-radius); width: 90%; animation: fadeIn 0.3s ease; }
+            .modal-content { 
+                border-radius: var(--border-radius); 
+                width: 90%; 
+                animation: fadeIn 0.3s ease; 
+            }
+            /* وقتی مودال در حال بسته شدن است (دسکتاپ) */
+            .modal-overlay.closing .modal-content {
+                animation: fadeOut 0.3s forwards !important;
+            }
         }
-
-        @keyframes slideUp { from { transform: translateY(100%); } to { transform: translateY(0); } }
 
         .modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-color); padding-bottom: 16px; margin-bottom: 24px; }
         .modal-header h2 { margin: 0; font-size: 20px; }
@@ -352,6 +410,104 @@
             .modal-header::before { content: ''; position: absolute; top: 8px; left: 50%; transform: translateX(-50%); width: 40px; height: 4px; background-color: var(--border-color); border-radius: 2px; }
         }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- استایل اختصاصی و لوکس برای تم سلطنتی --- */
+        
+        /* بازتعریف متغیرها برای عمق بیشتر */
+        body.theme-royal {
+            --bg-color: #1a0508; /* زرشکی بسیار تیره متمایل به سیاه */
+            --card-bg-color: #380e15; /* زرشکی مخملی */
+            --primary-color: #D4AF37; /* طلایی خالص */
+            --primary-hover: #F2D06B; /* طلایی روشن‌تر */
+            --text-primary: #F9F1E6; /* کرم استخوانی (بسیار شیک‌تر از سفید خالص) */
+            --text-secondary: #C8A2A8; /* صورتی چرکمرد */
+            --border-color: #59252e;
+        }
+
+        /* استایل بدنه اصلی با گرادینت محو */
+        body.theme-royal {
+            background-image: linear-gradient(to bottom, #2b0b11, #1a0508);
+            background-attachment: fixed;
+        }
+
+        /* کارت‌ها: حاشیه طلایی و سایه لوکس */
+        body.theme-royal .card, 
+        body.theme-royal .sidebar, 
+        body.theme-royal .mobile-nav,
+        body.theme-royal .modal-content {
+            background: linear-gradient(145deg, #3f1119, #330d13);
+            border: 1px solid rgba(212, 175, 55, 0.2); /* حاشیه طلایی محو */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6); /* سایه سنگین */
+        }
+
+        /* تیترها و اعداد مهم: طلایی شوند */
+        body.theme-royal h1, 
+        body.theme-royal h2, 
+        body.theme-royal .section-title,
+        body.theme-royal .hero-metric.main-balance .value,
+        body.theme-royal .sidebar-header h1 {
+            color: #D4AF37;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.5); /* سایه متن */
+        }
+        
+        body.theme-royal .logo-icon {
+            color: #D4AF37;
+            filter: drop-shadow(0 0 5px rgba(212, 175, 55, 0.5)); /* درخشش لوگو */
+        }
+
+        /* دکمه اصلی (Primary): حالت شمش طلا */
+        body.theme-royal .btn, 
+        body.theme-royal .section-count,
+        body.theme-royal .mobile-nav-center-btn {
+            background: linear-gradient(135deg, #b88a18 0%, #e8c660 50%, #b88a18 100%);
+            color: #240509 !important; /* متن تیره روی زمینه طلایی */
+            border: 1px solid #ffe68f;
+            font-weight: 800;
+            box-shadow: 0 4px 15px rgba(212, 175, 55, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        body.theme-royal .btn:hover,
+        body.theme-royal .mobile-nav-center-btn:hover {
+            filter: brightness(1.1);
+            box-shadow: 0 0 20px rgba(212, 175, 55, 0.4);
+            transform: translateY(-2px);
+        }
+
+        /* دکمه‌های خاص (Success, Danger, Info) را از حالت طلایی خارج می‌کنیم اما لوکس نگه می‌داریم */
+        body.theme-royal .btn-success { background: linear-gradient(135deg, #05502c, #10b981); color: white !important; border: none; }
+        body.theme-royal .btn-danger { background: linear-gradient(135deg, #680f0f, #ef4444); color: white !important; border: none; }
+        body.theme-royal .btn-info { background: linear-gradient(135deg, #312e81, #6366f1); color: white !important; border: none; }
+        body.theme-royal .btn-secondary, body.theme-royal .btn-light { background: #2b0b11; color: var(--text-primary) !important; border: 1px solid var(--border-color); }
+
+        /* منوی پایین موبایل */
+        body.theme-royal .mobile-nav {
+            border-top: 2px solid #D4AF37;
+        }
+        
+        body.theme-royal .mobile-nav .nav-btn.active {
+            color: #D4AF37;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.4);
+        }
+
+        /* اینپوت‌ها */
+        body.theme-royal input, 
+        body.theme-royal select, 
+        body.theme-royal textarea {
+            background-color: #26090e;
+            border-color: #59252e;
+            color: #F9F1E6;
+        }
+        body.theme-royal input:focus {
+            border-color: #D4AF37;
+            box-shadow: 0 0 0 2px rgba(212, 175, 55, 0.2);
+        }
+
+        /* آیتم‌های لیست */
+        body.theme-royal .item {
+            border: 1px solid rgba(212, 175, 55, 0.1);
+            background: rgba(0,0,0,0.2);
+        }
     </style>
 </head>
 <body>
@@ -370,6 +526,7 @@
         </div>
     </template>
 
+    <!-- (بقیه Templateها مثل قبل) -->
     <template id="work-form-template">
         <div class="form-group"><label for="workEmployer">نام کارفرما</label><input type="text" id="workEmployer" list="employer-list" placeholder="نام کارفرما را وارد کنید"><datalist id="employer-list"></datalist></div>
         <div class="form-group"><label for="workType">نوع کار</label><input type="text" id="workType" placeholder="نام کار را وارد کنید"></div>
@@ -602,6 +759,24 @@
             if (!str) return str;
             return str.replace(/[۰-۹]/g, d => '۰۱۲۳۴۵۶۷۸۹'.indexOf(d)).replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d));
         }
+        
+        // تابع کمکی برای بستن نرم مودال (با انیمیشن)
+        function closeModalAnimated(modalElement) {
+            if (!modalElement || modalElement.style.display === 'none') return;
+            
+            // 1. افزودن کلاس انیمیشن خروج
+            modalElement.classList.add('closing');
+            
+            // 2. صبر کردن تا پایان انیمیشن (300 میلی‌ثانیه مطابق CSS)
+            setTimeout(() => {
+                modalElement.style.display = 'none';
+                modalElement.classList.remove('closing');
+                
+                // پاکسازی استیت‌ها بعد از بسته شدن کامل
+                state.editingItemId = null;
+                document.body.style.overflow = '';
+            }, 300);
+        }
 
         function setupDateInputMask(inputElement) {
             if (!inputElement) return;
@@ -757,13 +932,8 @@
                 
                 if (!isBackAction) { 
                     vibrate(10); 
-                    const isTargetMain = MAIN_TABS.includes(pageId);
-
-                    if (isTargetMain) {
-                         history.replaceState({ pageId: pageId }, null, `#${pageId}`);
-                    } else {
-                        history.pushState({ pageId: pageId }, null, `#${pageId}`);
-                    }
+                    // تغییر مهم: همیشه از pushState استفاده می‌کنیم تا دکمه بازگشت کار کند
+                    history.pushState({ pageId: pageId }, null, `#${pageId}`);
                 }
 
                 activePageId = pageId;
@@ -807,12 +977,12 @@
                 runWithNativeDelay(DOM.confirmModalOk, () => {
                     onConfirm(); 
                     if(window.history.state && window.history.state.modal) window.history.back();
-                    else DOM.confirmModal.style.display = 'none'; 
+                    else closeModalAnimated(DOM.confirmModal); 
                 });
             }; 
             DOM.confirmModalCancel.onclick = () => { 
                 if(window.history.state && window.history.state.modal) window.history.back();
-                else DOM.confirmModal.style.display = 'none'; 
+                else closeModalAnimated(DOM.confirmModal); 
             }; 
         }
         
@@ -922,7 +1092,7 @@
             
             // Close modal properly
             if(window.history.state && window.history.state.modal) window.history.back();
-            else DOM.formModal.style.display = 'none'; 
+            else closeModalAnimated(DOM.formModal); 
             
             document.body.style.overflow = '';
             updateAll();
@@ -1028,7 +1198,7 @@
             state.editingItemId = null;
             state.editingItemType = null;
             if(window.history.state && window.history.state.modal) window.history.back();
-            else DOM.formModal.style.display = 'none';
+            else closeModalAnimated(DOM.formModal);
             document.body.style.overflow = '';
             updateAll();
         }
@@ -1071,7 +1241,7 @@
                 cancelBtn.addEventListener('click', () => { 
                     state.editingItemId = null; state.editingItemType = null; 
                     if(window.history.state && window.history.state.modal) window.history.back();
-                    else DOM.formModal.style.display = 'none'; 
+                    else closeModalAnimated(DOM.formModal); 
                     document.body.style.overflow = ''; 
                 }); 
                 submitBtn.parentElement.appendChild(cancelBtn); 
@@ -1115,7 +1285,7 @@
             state.editingItemId = null;
             state.editingItemType = null;
             if(window.history.state && window.history.state.modal) window.history.back();
-            else DOM.formModal.style.display = 'none';
+            else closeModalAnimated(DOM.formModal);
             document.body.style.overflow = '';
             updateAll();
         }
@@ -1147,7 +1317,7 @@
                 cancelBtn.addEventListener('click', () => { 
                     state.editingItemId = null; state.editingItemType = null; 
                     if(window.history.state && window.history.state.modal) window.history.back();
-                    else DOM.formModal.style.display = 'none'; 
+                    else closeModalAnimated(DOM.formModal); 
                     document.body.style.overflow = ''; 
                 }); 
                 submitBtn.parentElement.appendChild(cancelBtn); 
@@ -1188,7 +1358,7 @@
             state.editingItemId = null;
             state.editingItemType = null;
             if(window.history.state && window.history.state.modal) window.history.back();
-            else DOM.formModal.style.display = 'none';
+            else closeModalAnimated(DOM.formModal);
             document.body.style.overflow = '';
             updateAll();
         }
@@ -1221,7 +1391,7 @@
                 cancelBtn.addEventListener('click', () => { 
                     state.editingItemId = null; state.editingItemType = null; 
                     if(window.history.state && window.history.state.modal) window.history.back();
-                    else DOM.formModal.style.display = 'none'; 
+                    else closeModalAnimated(DOM.formModal); 
                     document.body.style.overflow = ''; 
                 }); 
                 submitBtn.parentElement.appendChild(cancelBtn); 
@@ -1305,15 +1475,21 @@
                 formEl.querySelector('#saveNewNameBtn').addEventListener('click', () => {
                     const newName = input.value.trim();
                     if (!newName) return showNotification('لطفاً نام جدید را وارد کنید', 'error');
-                    if (newName === oldName) { DOM.formModal.style.display = 'none'; return; }
+                    if (newName === oldName) { 
+                        if(window.history.state && window.history.state.modal) window.history.back();
+                        else closeModalAnimated(DOM.formModal);
+                        return; 
+                    }
                     let updateCount = 0;
                     state.works.forEach(w => { if(w.employer === oldName) { w.employer = newName; updateCount++; } });
                     state.payments.forEach(p => { if(p.employer === oldName) { p.employer = newName; updateCount++; } });
                     state.archive.forEach(a => { if(a.employer === oldName) { a.employer = newName; updateCount++; } });
                     showNotification(`نام کارفرما در تمام سوابق (${updateCount} مورد) تغییر کرد.`, 'success');
-                    DOM.formModal.style.display = 'none';
-                    document.body.style.overflow = '';
+                    
                     if(window.history.state && window.history.state.modal) window.history.back();
+                    else closeModalAnimated(DOM.formModal);
+
+                    document.body.style.overflow = '';
                     recalculateEmployerBalance(newName);
                     DOM.employerListView.style.display = 'block';
                     DOM.employerDetailView.style.display = 'none';
@@ -1372,8 +1548,16 @@
             state.editingItemId = null; state.editingItemType = null;
             const config = formConfigs[itemType];
             if (config) {
-                DOM.formModal.style.display = 'none';
-                setTimeout(() => { showFormInModal(config.title, config.templateId, config.setup); }, 200);
+                // اگر قبلا مودال باز است (منوی انتخاب)، آن را می‌بندیم و مودال جدید را باز می‌کنیم
+                // توجه: چون منوی انتخاب هم مودال است، بهتر است آن را ببندیم سپس فرم را باز کنیم
+                if(window.history.state && window.history.state.modal) {
+                     window.history.back(); // بستن منوی انتخاب
+                     setTimeout(() => { showFormInModal(config.title, config.templateId, config.setup); }, 350); // صبر برای انیمیشن بسته شدن
+                } else {
+                     // اگر به هر دلیلی دستی باز شده بود
+                     DOM.formModal.style.display = 'none';
+                     setTimeout(() => { showFormInModal(config.title, config.templateId, config.setup); }, 100);
+                }
             }
         }
 
@@ -1386,19 +1570,21 @@
             // Set Initial State
             history.replaceState({ pageId: 'dashboard-page' }, null, '#dashboard-page');
 
-            // متغیر برای مدیریت خروج با دو بار کلیک
             let backPressExitTimer = null;
 
             window.addEventListener('popstate', (event) => {
-                // ۱. اگر مودال (پنجره‌های بازشو) باز است، آن را ببند و در همین صفحه بمان
-                if (DOM.formModal.style.display === 'flex' || DOM.reportModal.style.display === 'flex' || DOM.confirmModal.style.display === 'flex') {
-                    DOM.formModal.style.display = 'none';
-                    DOM.reportModal.style.display = 'none';
-                    DOM.confirmModal.style.display = 'none';
-                    state.editingItemId = null;
-                    document.body.style.overflow = '';
-                    // استیت را دوباره فیکس می‌کنیم که انگار مودال بسته شده اما صفحه عوض نشده
-                    history.pushState({ pageId: activePageId }, null, `#${activePageId}`);
+                // ۱. اگر مودال باز است، آن را با انیمیشن ببند (اولویت اول)
+                if (DOM.formModal.style.display === 'flex') {
+                    closeModalAnimated(DOM.formModal);
+                    // چون دکمه بک زده شده، هیستوری قبلاً برگشته، پس نیازی به تغییر هیستوری نیست
+                    return;
+                }
+                if (DOM.reportModal.style.display === 'flex') {
+                    closeModalAnimated(DOM.reportModal);
+                    return;
+                }
+                if (DOM.confirmModal.style.display === 'flex') {
+                    closeModalAnimated(DOM.confirmModal);
                     return;
                 }
 
@@ -1408,33 +1594,26 @@
                     switchPage('employers-page', true);
                     return;
                 } else if (activePageId === 'employers-page' && (!event.state || !event.state.subView)) {
-                    // برگشت از جزئیات کارفرما به لیست کارفرما
                     DOM.employerListView.style.display = 'block';
                     DOM.employerDetailView.style.display = 'none';
                 }
 
-                // ۳. منطق خروج در صفحه اصلی (داشبورد)
+                // ۳. منطق خروج در صفحه اصلی
                 if (activePageId === 'dashboard-page') {
                     if (backPressExitTimer) {
-                        // اگر تایمر فعال است یعنی بار دوم است -> اجازه بده مرورگر کار خودش را بکند (خروج)
                         return;
                     } else {
-                        // بار اول است -> جلوگیری از خروج و نمایش پیام
-                        history.pushState({ pageId: 'dashboard-page' }, null, '#dashboard-page'); // دوباره استیت را اضافه می‌کنیم که خارج نشود
+                        history.pushState({ pageId: 'dashboard-page' }, null, '#dashboard-page'); 
                         showNotification('برای خروج، دوباره دکمه بازگشت را بزنید.', 'info');
-                        
-                        backPressExitTimer = setTimeout(() => {
-                            backPressExitTimer = null;
-                        }, 2000); // ۲ ثانیه فرصت برای کلیک دوم
+                        backPressExitTimer = setTimeout(() => { backPressExitTimer = null; }, 2000); 
                         return;
                     }
                 }
 
-                // ۴. جابجایی معمولی بین صفحات اگر در داشبورد نیستیم
+                // ۴. جابجایی معمولی بین صفحات
                 if (event.state && event.state.pageId) {
                     switchPage(event.state.pageId, true);
                 } else {
-                    // اگر استیت خاصی نبود، برگرد به داشبورد
                     switchPage('dashboard-page', true);
                 }
             });
@@ -1483,17 +1662,20 @@
             });
 
             document.querySelectorAll('[data-modal-close]').forEach(btn => btn.addEventListener('click', () => { 
-                // بستن دستی مودال هم باید هیستوری را اصلاح کند
-                if(window.history.state && window.history.state.modal) window.history.back();
-                else {
-                    btn.closest('.modal-overlay').style.display = 'none'; state.editingItemId=null; document.body.style.overflow = '';
+                if(window.history.state && window.history.state.modal) {
+                    window.history.back(); 
+                } else {
+                    const modal = btn.closest('.modal-overlay');
+                    closeModalAnimated(modal);
                 }
             })); 
+            
             document.querySelectorAll('.modal-overlay').forEach(modal => modal.addEventListener('click', (e) => { 
                 if (e.target === modal) { 
-                    if(window.history.state && window.history.state.modal) window.history.back();
-                    else {
-                        modal.style.display = 'none'; state.editingItemId=null; document.body.style.overflow = ''; 
+                    if(window.history.state && window.history.state.modal) {
+                        window.history.back(); 
+                    } else {
+                        closeModalAnimated(modal);
                     }
                 } 
             })); 
@@ -1508,21 +1690,18 @@
 
             DOM.morePageLinks.forEach(link => {
                 link.addEventListener('click', (e) => {
-                    if(link.id === 'app-exit-btn') return; // دکمه خروج رویداد جداگانه دارد
+                    if(link.id === 'app-exit-btn') return;
                     e.preventDefault();
                     switchPage(link.dataset.pageLink);
                 });
             });
 
-            // دکمه خروج دستی
             const exitBtn = document.getElementById('app-exit-btn');
             if (exitBtn) {
                 exitBtn.addEventListener('click', (e) => {
                     e.preventDefault();
                     showConfirmModal('خروج', 'آیا می‌خواهید از برنامه خارج شوید؟', () => {
-                        // تلاش برای بستن پنجره
                         window.close();
-                        // اگر پنجره بسته نشد (چون مرورگر اجازه نمی‌دهد)، پیام می‌دهیم
                         showNotification('لطفاً پنجره یا تب مرورگر را ببندید.', 'info');
                     });
                 });
